@@ -1,3 +1,276 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+
+ .TopMenuLayout
+ {
+    width: 1360px !important;
+ }
+
+.IndexChoice
+{
+    @apply flex w-full;
+    > .choiced,
+    > .search
+    {
+        @apply w-1/2;
+    }
+    > .choiced
+    {
+        li
+        {
+            @apply inline-block mb-2 mr-4;
+        }
+        li + li
+        {
+        }
+    }
+    > .search
+    {
+        @apply flex flex-col justify-start;
+        header
+        {
+            @apply flex mb-2;
+            input
+            {
+                @apply w-full mr-2;
+            }
+            button
+            {
+                @apply min-w-40;
+            }
+        }
+    }
+}
+.FieldInput .HasMany
+{
+    @apply w-full;
+}
+
+.IndexReferenceForm,
+.IndexChoice
+{
+
+    > .Modal
+    {
+        .FieldGroup
+        {
+            border: none !important;
+        }
+        .Raw
+        {
+            min-height: auto !important;
+            min-width: auto !important;
+            border: none !important;
+            padding: 0 !important;
+            background: none !important;
+        }
+    }
+}
+
+.IndexReferenceForm
+{
+    @apply flex justify-start items-start;
+    .Preview
+    {
+        @apply inline-block p-2 ml-2 border bg-slate-50 rounded;
+        min-height: 2.5rem;
+        min-width: 10rem;
+        .preview
+        {
+            @apply mr-2;
+            &:last-child
+            {
+                @apply mr-0;
+            }
+        }
+    }
+    .simple-search
+    {
+        @apply ml-2;
+        ul.suggest
+        {
+            @apply bg-slate-100 p-1;
+            li
+            {
+                @apply block my-1 hover:underline text-sm cursor-pointer;
+                
+            }
+        }
+    }
+}
+
+.IndexChoice
+{
+    .button-group
+    {
+        button
+        {
+            @apply w-40;
+        }
+    }
+    .SimpleSearch
+    {
+        @apply ml-0;
+        input[type=text]
+        {
+            @apply w-40;
+        }
+    }
+    div.Previews
+    {
+        @apply border p-2 mr-2;
+        ul.Previews
+        {
+            li
+            {
+                @apply mb-1 flex items-center text-xs;
+                span.Raw
+                {
+                    min-height: 0 !important;
+                }
+                button
+                {
+                    @apply ml-1;
+                }
+            }
+        }
+        span.disabled
+        {
+            @apply text-gray-600 w-24 block;
+        }
+
+    }
+}
+
+.SimpleSearch
+{
+    @apply ml-2;
+    input[type=text]
+    {
+        @apply h-8 mt-1;
+    }
+    ul
+    {
+        li
+        {
+            @apply mt-1 underline cursor-pointer hover:opacity-50;
+        }
+    }
+}
+
+
+
+
+.admin-order.index
+{
+    td.detail
+    {
+        @apply text-sm;
+        table
+        {
+            th
+            {
+                font-size: 10px;
+                line-height: 1.2em;
+                min-width: 3em;
+                @apply bg-slate-100;
+            }
+            th, td
+            {
+                @apply p-1;
+            }
+        }
+    }
+}
+.admin-order.show
+{
+    .OrderProcessControl
+    {
+        @apply flex flex-row-reverse items-center mr-12;
+        > *
+        {
+            @apply ml-4;
+        }
+        .ordered_at { @apply hidden; }
+    }
+}
+.admin-order.create,
+.admin-order.edit
+{
+    .Form.Fields
+    {
+        .HasMany
+        {
+            li.Row .FieldGroup
+            {
+                @apply relative pl-16 pr-2 text-sm;
+            }
+
+
+            .Field
+            {
+                input
+                {
+                    @apply border-slate-200;
+                }
+            }
+
+            .Field.seq
+            {
+                @apply absolute left-0 top-0 bottom-0 my-auto h-full;
+                .FieldLabel
+                {
+                    @apply hidden;
+                }
+                input[readonly]
+                {
+                    @apply border-none bg-gray-200 w-12;
+                    height: 100%;
+                    padding: 0;
+                }
+
+
+            }
+            .Field.product
+            {
+                border-style: solid;
+                @apply w-full border-b;
+            }
+            .Field.unit
+            {
+                input
+                {
+                    @apply w-24;
+                }
+            }
+            .Field.price
+            {
+                input
+                {
+                    @apply w-24;
+                }
+            }
+            .Field.quantity
+            {
+                input
+                {
+                    @apply border-slate-800 w-36;
+                }
+            }
+            .Field.user
+            {
+                border-style: solid;
+                @apply border-t;
+                width: 40em;
+            }
+            .Field.deadline
+            {
+                border-style: solid;
+                @apply border-t;
+                width: calc(100% - 40em);
+            }
+        }
+    }
+}

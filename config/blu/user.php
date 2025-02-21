@@ -55,6 +55,11 @@ return [
             'label' => '材料データ',
             'type' => 'belongsToMany',
             'search' => [
+                'product_id' => [
+                    'label' => '材料データ ID',
+                    'type' => false,
+                    'field' => 'product.id',
+                ],
                 'product_code' => [
                     'label' => '材料データ コード',
                     'type' => 'text',
@@ -71,6 +76,9 @@ return [
             'belongsToMany' => [
                 'label' => 'name',
             ],
+            'IndexChoice' => [
+                'preview' => 'name',
+            ]
         ],
     ],
     'index' => [
@@ -86,5 +94,8 @@ return [
     'form' => [
         'name',
         'email',
+        'password',
+        'password_confirmation',
+        'product',
     ],
 ];

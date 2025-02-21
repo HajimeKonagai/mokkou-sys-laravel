@@ -14,4 +14,6 @@ class DashboardController extends Controller
         // assign
         return Inertia::render('Admin/Dashboard');
     }
+
+    
 }

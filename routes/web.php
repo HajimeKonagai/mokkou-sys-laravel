@@ -8,9 +8,11 @@ use Inertia\Inertia;
 use App\Http\Controllers\SwaggerController;
 
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\OrderController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
-use App\Http\Controllers\Admin\OrderController;
+use App\Http\Controllers\Admin\OrderProcessController;
 
 
 if (! function_exists('crudPage') )
@@ -36,9 +38,15 @@ if (! function_exists('crudPage') )
 Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function ()
 {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
+    crudPage('project', ProjectController::class);
     crudPage('order', OrderController::class);
     crudPage('user', UserController::class);
     crudPage('product', ProductController::class);
+
+
+    Route::post('order_process/order/{order}', [OrderProcessController::class, 'order'])->name('order_process.order');
+    Route::post('order_process/cancel/{order}', [OrderProcessController::class, 'cancel'])->name('order_process.cancel');
+    Route::post('order_process/delivered/{order}', [OrderProcessController::class, 'delivered'])->name('order_process.delivered');
 });
 
 

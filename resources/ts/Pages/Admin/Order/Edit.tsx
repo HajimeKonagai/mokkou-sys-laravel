@@ -21,7 +21,9 @@ const Edit = ({
     config,
     item,
     formConfig = ['*'],
-    terminalReferenceConfigs,
+    projectConfigs,
+    productConfigs,
+    userConfigs,
 }) =>
 {
     const { data, setData, errors, put, processing, isDirty } = useForm(item)
@@ -80,8 +82,9 @@ const Edit = ({
                     preference={formPreference.preference}
                     errors={errors}
                     callbacks={customCallbacks({
-                        item,
-                        data
+                        projectConfigs,
+                        productConfigs,
+                        userConfigs,
                     })}
                 />
             </div>

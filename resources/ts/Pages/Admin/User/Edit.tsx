@@ -18,11 +18,10 @@ import { useEffect } from 'react'
 declare var route
 
 const Edit = ({
-    auth,
     config,
     item,
     formConfig = ['*'],
-    terminalReferenceConfigs,
+    productConfigs,
 }) =>
 {
     const { data, setData, errors, put, processing, isDirty, reset } = useForm(item)
@@ -33,9 +32,6 @@ const Edit = ({
             reset('password', 'password_confirmation');
         };
     }, []);
-
-
-
 
     const update = (e) =>
     {
@@ -62,7 +58,6 @@ const Edit = ({
     })
 
     return (<Layout
-        auth={auth}
         title={`${TITLE} - ${TITLE_EDIT}「id: ${item.id}」`}
         className={`${CLASS_NAME} edit`}
     >
@@ -90,8 +85,7 @@ const Edit = ({
                     preference={formPreference.preference}
                     errors={errors}
                     callbacks={customCallbacks({
-                        item,
-                        data
+                        productConfigs,
                     })}
                 />
             </div>

@@ -3,7 +3,8 @@
 return [
     'config' => [
         'id' => [
-            'type' => false,
+            'label' => '発注番号',
+            'type' => 'raw',
             'search' => [
                 'id' => [
                     'label' => 'ID',
@@ -11,55 +12,48 @@ return [
                 ],
             ],
             'sort' => true,
-        ],
-        // 発注番号
-        'code' => [
-            'label' => '発注番号',
-            'type' => 'text',
-            'search' => [
-                'code' => [
-                    'label' => '発注番号',
-                    'type' => 'text',
-                    'compare' => 'like',
-                ],
-            ],
-            'sort' => true,
-            'required' => true,
+            'attribute' => 'code',
+            'description' => '保存時に自動採番されます。'
         ],
         // プロジェクト
-        'name' => [
+        'project' => [
             'label' => 'プロジェクト',
-            'type' => 'text',
-            'size' => 50,
+            'type' => 'belongsTo',
             'search' => [
-                'name' => [
-                    'label' => 'プロジェクト',
+                'project_name' => [
+                    'label' => 'プロジェクト名',
+                    'field' => 'project.name',
                     'type' => 'text',
                     'compare' => 'like',
                 ],
             ],
+            'options' => [
+                '' => ['id' => 0, 'name' => ''],
+            ],
+            'belongsTo' => [
+                'label' => 'name',
+            ],
+            'IndexReference' => [
+                'preview' => ['name'],
+            ],
             'sort' => true,
+            'attribute' => 'project_name',
         ],
         'status' => [
             'label' => 'ステータス',
             'type' => 'raw',
-            'options' => [
-                0 => '未発注',
-                1 => '発注済み',
-                2 => '納品済み',
-            ],
             'search' => [
                 'status' => [
                     'label' => 'ステータス',
                     'type' => 'select',
                     'options' => [
-                        0 => '未発注',
-                        1 => '発注済み',
-                        2 => '納品済み',
+                        '' => '',
                     ],
                 ],
             ],
             'sort' => true,
+            'attribute' => 'status_text',
+            'description' => '一覧・編集の「発注処理」時に変更されます',
         ],
         'ordered_at' => [
             'label' => '発注日',
@@ -85,28 +79,51 @@ return [
                 ],
             ],
             'sort' => true,
+            'description' => '一覧・編集の「発注処理」時に入力されます',
         ],
+        'deadline_at' => [
+            'label' => '希望納期',
+            'type' => 'date',
+            'search' => [
+                'deadline_at_from' => [
+                    'label' => '希望納期(〜から)',
+                    'type' => 'date',
+                    'compare' => '>=',
+                    'placeholder' => '',
+                ],
+                'deadline_at_to' => [
+                    'label' => '希望納期(〜まで)',
+                    'type' => 'date',
+                    'compare' => '<=',
+                    'placeholder' => '',
+                ],
+            ],
+            'sort' => true,
+        ],
+
         'detail' => [
             'label' => '発注アイテム',
             'type' => 'hasMany',
             'hasMany' => [
                 'config' => [
+                    'seq' => [
+                        'label' => '',
+                        'type' => 'order',
+                    ],
                     'product' => [
-                        'label' => '商品',
+                        'label' => '材料データ',
                         'type' => 'belongsTo',
-                        'belongsTo' => [
-                            'label' => 'name',
-                            'type' => 'select',
+                        'IndexReference' => [
+                            'preview' => ['name'],
                             'reference' => [
                                 'code' => 'code',
                                 'name' => 'name',
                                 'unit' => 'unit',
                                 'price' => 'price',
-                            ]
+                            ],
                         ],
-                        'options' => [
-                            '0' => ['id' => 0, 'name' => ''],
-                        ],
+                        'attribute' => 'product_name',
+                        'description' => '「仕入先」の選択によって自動的に絞り込まれます',
                     ],
                     // 材料コード
                     'code' => [
@@ -116,6 +133,12 @@ return [
                     // 材料名
                     'name' => [
                         'label' => '材料名',
+                        'type' => 'text',
+                        'size' => 30,
+                    ],
+                    // 単価
+                    'price' => [
+                        'label' => '単価',
                         'type' => 'text',
                     ],
                     // 数量
@@ -128,25 +151,18 @@ return [
                     'unit' => [
                         'label' => '単位',
                         'type' => 'text',
-                        'size' => 10,
+                        'size' => 8,
                     ],
-                    // 単価
-                    'price' => [
-                        'label' => '単価',
-                        'type' => 'text',
-                        'size' => 20,
-                    ],
+
                     // 仕入先
                     'user' => [
                         'label' => '仕入れ先',
                         'type' => 'belongsTo',
-                        'belongsTo' => [
-                            'label' => 'name',
-                            'type' => 'select',
+                        'IndexReference' => [
+                            'preview' => ['name'],
                         ],
-                        'options' => [
-                            '' => ['id' => 0, 'name' => ''],
-                        ],
+                        'attribute' => 'user_name',
+                        'description' => '「材料データ」の選択によって自動的に絞り込まれます',
                     ],
                     // 納期
                     'deadline' => [
@@ -197,10 +213,10 @@ return [
     ],
     'index' => [
         '_control',
-        'code',
-        'name',
-        'status',
-        'ordered_at',
+        '_order_control',
+        'deadline_at',
+        'id',
+        'project',
         'detail',
     ],
     'search' => [
@@ -209,9 +225,10 @@ return [
         'detail',
     ],
     'form' => [
-        'code',
+        ['id', 'status', 'ordered_at'],
         'name',
-        ['status', 'ordered_at'],
+        'project',
+        'deadline_at',
         'detail',
     ],
 ];

@@ -9,7 +9,9 @@ const BelongsToMany = ({
     // TODO: fieldDefaultData
     // TODO: checkbox 以外も reference
 
-    const primaryKey = fieldConfig.belongsToMany['primaryKey'];
+    const primaryKey = (fieldConfig.belongsToMany && 'primaryKey' in fieldConfig.belongsToMany) ?
+        fieldConfig.belongsToMany['primaryKey'] :
+        'id'
 
     return (<div className={`Checkbox BelongsToMany ${fieldKey}`}>
 

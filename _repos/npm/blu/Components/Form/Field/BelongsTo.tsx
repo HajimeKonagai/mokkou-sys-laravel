@@ -15,8 +15,14 @@ export const useBelongsTo = (props:FieldInputFormProps) =>
         setFieldData,
     } = props
 
-    const primaryKey = fieldConfig.belongsTo.primaryKey ? fieldConfig.belongsTo.primaryKey: 'id'
-    const labelText = fieldConfig.belongsTo['label'];
+
+    const primaryKey = (fieldConfig.belongsTo && 'primaryKey' in fieldConfig.belongsTo) ?
+        fieldConfig.belongsTo['primaryKey'] :
+        'id'
+    const labelText = (fieldConfig.belongsTo && 'label' in fieldConfig.belongsTo) ?
+        fieldConfig.belongsTo['label'] :
+        'id'
+
     const configForComponent = {...fieldConfig}
     configForComponent.options = {}
     if (!('options' in fieldConfig)) fieldConfig.options = {}

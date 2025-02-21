@@ -23,8 +23,12 @@ import {
     CONTROL_EDIT_LABEL,
     CONTROL_DELETE_LABEL,
 } from './constants'
+import customCallbacks from './View/customCallbacks';
+import OrderProcessControl from './Form/OrderProcessControl';
+
 
 declare var route
+
 
 const Control = ({ data }) =>
 {
@@ -50,8 +54,8 @@ const Control = ({ data }) =>
         }
     }
 
-    return (<div className='button-group'>
-        <a className='small button view' href={route(SHOW_ROUTE, { id: data.id })} target="_black"><ShowIcon />表示</a>
+    return (<div className='button-group-vertical'>
+        <Link className='small button view' href={route(SHOW_ROUTE, { id: data.id })}><ShowIcon />表示</Link>
         <Link className='small button edit' href={route(EDIT_ROUTE, { id: data.id })}><EditIcon />{CONTROL_EDIT_LABEL}</Link>
         <button className='small button delete' disabled={processing} onClick={deleteItem}><DeleteIcon />{CONTROL_DELETE_LABEL}</button>
     </div>)
@@ -59,8 +63,6 @@ const Control = ({ data }) =>
 
 
 const Index = ({
-    auth,
-    account,
     config,
     searchConfig = [],
     indexConfig = [],
@@ -81,7 +83,6 @@ const Index = ({
     })
 
     return (<Layout
-        auth={auth}
         title={`${TITLE} - ${TITLE_INDEX}`}
         className={`${CLASS_NAME} index`}
     >
@@ -93,12 +94,18 @@ const Index = ({
             title={TITLE}
             apiUrl={route(API_ROUTE)}
             customCells={{
+                '_order_control': {
+                    type: OrderProcessControl,
+                    props: {},
+                    label: '発注処理',
+                },
                 '_control': {
                     type: Control,
                     props: {},
                     label: CONTROL_NAME
                 },
             }}
+            callbacks={customCallbacks({})}
         />
     </Layout>)
 }

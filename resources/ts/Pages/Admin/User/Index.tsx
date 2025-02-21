@@ -51,7 +51,7 @@ const Control = ({ data }) =>
     }
 
     return (<div className='button-group'>
-        <a className='small button view' href={route(SHOW_ROUTE, { id: data.id })} target="_black"><ShowIcon />表示</a>
+        <a className='small button view' href={route(SHOW_ROUTE, { id: data.id })}><ShowIcon />表示</a>
         <Link className='small button edit' href={route(EDIT_ROUTE, { id: data.id })}><EditIcon />{CONTROL_EDIT_LABEL}</Link>
         <button className='small button delete' disabled={processing} onClick={deleteItem}><DeleteIcon />{CONTROL_DELETE_LABEL}</button>
     </div>)

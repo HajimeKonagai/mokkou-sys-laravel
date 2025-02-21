@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\SwaggerController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\ProductController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderController;
@@ -44,6 +45,7 @@ Route::get('/download/yaml', [SwaggerController::class, 'download_yaml']);
 // TODO: env で分ける
 Route::group(['middleware' => ['auth:sanctum', 'can:admin'], 'prefix' => 'admin', 'as' => 'api.admin.'], function ()
 {
+    crud('project', ProjectController::class, 'project');
     crud('product', ProductController::class, 'product');
     crud('user', UserController::class, 'user');
     crud('order', OrderController::class, 'order');

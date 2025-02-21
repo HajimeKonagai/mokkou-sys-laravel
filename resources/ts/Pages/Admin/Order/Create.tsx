@@ -22,9 +22,12 @@ const Create = ({
     auth,
     config,
     formConfig = ['*'],
-    userReferenceConfigs,
+    projectConfigs,
+    productConfigs,
+    userConfigs,
 }) =>
 {
+    console.log('productConfigs', productConfigs, userConfigs)
     const item = defaultDataFromConfig(config)
     const { data, setData, errors, post, processing, isDirty } = useForm(item)
     confirmBeforeUnload(isDirty)
@@ -82,7 +85,9 @@ const Create = ({
                     preference={formPreference.preference}
                     errors={errors}
                     callbacks={customCallbacks({
-                        data
+                        projectConfigs,
+                        productConfigs,
+                        userConfigs,
                     })}
                 />
             </div>

@@ -1,14 +1,8 @@
-const customCallbacks = (
-    render,
-    config,
-    preference,
-    data,
-    fieldKey,
-    fieldConfig,
-    fieldData,
-) => {
+const customCallbacks = ({
+}) =>
+{
     return {
-        'sampleCallback': () => {
+        'deadline': () => {
             return (<div>sampleCallback</div>)
         }
     }

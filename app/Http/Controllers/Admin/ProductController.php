@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\Base\Crud;
 use App\Models\Product as MainModel;
+use Inertia\Inertia;
 
 use App\Models\User;
 
@@ -43,11 +44,22 @@ class ProductController extends Crud
 
     public function create(Request $request)
     {
+        return Inertia::render(static::viewDir().'Create', [
+            'config' => static::config(),
+            'formConfig' => static::formConfig(),
+            'userConfigs' => config('blu.user'),
+        ]);
         return static::_create($request);
     }
 
     public function edit(Request $request, MainModel $id)
     {
+        return Inertia::render(static::viewDir().'Edit', [
+            'config' => static::config(),
+            'formConfig' => static::formConfig(),
+            'item' => $id,
+            'userConfigs' => config('blu.user'),
+        ]);
         return static::_edit($request, $id);
     }
 

@@ -10,22 +10,27 @@ export default {
     },
      */
 
+    'プロジェクト' : {
+        'プロジェクト一覧': route('admin.project.index'),
+        'プロジェクト新規作成': route('admin.project.create'),
+        0: route('admin.project.edit', {id: '*'}),
+    },
 
     '発注' : {
         '発注一覧': route('admin.order.index'),
-        '新規発注作成': route('admin.order.create'),
+        '発注新規作成': route('admin.order.create'),
         0: route('admin.order.edit', {id: '*'}),
     },
 
     '材料データ' : {
         '材料データ一覧': route('admin.product.index'),
-        '新規材料データ作成': route('admin.product.create'),
+        '材料データ新規作成': route('admin.product.create'),
         0: route('admin.product.edit', {id: '*'}),
     },
 
-    '仕入れ先' : {
-        '仕入れ先一覧': route('admin.user.index'),
-        '新規仕入れ先作成': route('admin.user.create'),
+    '仕入先' : {
+        '仕入先一覧': route('admin.user.index'),
+        '仕入先新規作成': route('admin.user.create'),
         0: route('admin.user.edit', {id: '*'}),
     },
 }

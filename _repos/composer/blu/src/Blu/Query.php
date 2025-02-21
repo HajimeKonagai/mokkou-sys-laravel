@@ -61,32 +61,33 @@ class Query
 					$searchFields = explode('.', $searchField);
 					$q->whereHas($searchFields[0], function ($q) use ($searchFields, $compare, $search)
 					{
+						// \Log::info($q->getModel()->getTable());
 						if (in_array(strtoupper($compare), ['NOT IN', 'NOT_IN']))
 						{
 							$search = is_array($search) ? $search: [$search];
 							// $q->whereIn($q->getModel()->getTable().'.'.$searchField, $search);
-							$q->whereNotIn($searchField, $search);
+							$q->whereNotIn($q->getModel()->getTable().'.'.$searchField, $search);
 						}
 						else if (is_array($search) || in_array($compare, ['in', 'IN']))
 						{
 							$search = is_array($search) ? $search: [$search];
-							$q->whereIn($searchFields[1], $search);
+							$q->whereIn($q->getModel()->getTable().'.'.$searchFields[1], $search);
 						}
 						else if (in_array(strtoupper($compare), ['LIKE']))
 						{
 							$likeSearches = explode(' ', trim(preg_replace('/\s+/', ' ', $search)));
 							$q->where(function ($q) use ($searchFields, $compare, $likeSearches)
 							{
-								$q->where($searchFields[1], $compare, '%'.$likeSearches[0].'%');
+								$q->where($q->getModel()->getTable().'.'.$searchFields[1], $compare, '%'.$likeSearches[0].'%');
 								for ($i = 1; $i < count($likeSearches); $i++)
 								{
-									$q->where($searchFields[1], $compare, '%'.$likeSearches[$i].'%');
+									$q->where($q->getModel()->getTable().'.'.$searchFields[1], $compare, '%'.$likeSearches[$i].'%');
 								}
 							});
 						}
 						else
 						{
-							$q->where($searchFields[1], $compare, $search);
+							$q->where($q->getModel()->getTable().'.'.$searchFields[1], $compare, $search);
 						}
 					});
 				}
@@ -127,6 +128,7 @@ class Query
 
 		// Log::info('$q->toSql()');
 		// Log::info(preg_replace_array('/\?/', $q->getBindings(), $q->toSql()));
+		
 		return $q;
 	}
 

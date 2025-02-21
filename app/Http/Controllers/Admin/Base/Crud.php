@@ -68,11 +68,11 @@ abstract class Crud extends Controller
 
     public static function _show(Request $request, $item)
     {
-        if (true || $request->expectsJson())
+        $item->load(static::mainModelWith());
+        if ($request->expectsJson())
         {
             return $item;
         }
-
 
         return Inertia::render(static::viewDir().'Show', [
             'config' => static::config(),

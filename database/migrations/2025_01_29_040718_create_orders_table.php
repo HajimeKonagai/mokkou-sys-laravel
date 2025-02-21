@@ -14,10 +14,12 @@ return new class extends Migration
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
 
-            $table->string('code')->nullable()->default(null);
-            $table->string('name')->nullable()->default(null);
+            $table->unsignedBigInteger('project_id')->nullable()->default(null);
+            // $table->string('code')->nullable()->default(null);
+            // $table->string('name')->nullable()->default(null);
+            $table->date('deadline_at')->nullable()->default(null);
             $table->integer('status')->default(0);
-            $table->date('ordered_at')->nullable()->default(null);
+            $table->datetime('ordered_at')->nullable()->default(null);
 
             $table->timestamps();
         });

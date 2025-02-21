@@ -19,10 +19,9 @@ import customCallbacks from './Form/customCallbacks'
 declare var route
 
 const Create = ({
-    auth,
     config,
     formConfig = ['*'],
-    userReferenceConfigs,
+    productConfigs,
 }) =>
 {
     const item = defaultDataFromConfig(config)
@@ -54,7 +53,6 @@ const Create = ({
 
 
     return (<Layout
-        auth={auth}
         title={`${TITLE} - ${TITLE_CREATE}`}
         className={`${CLASS_NAME} create`}
     >
@@ -82,7 +80,7 @@ const Create = ({
                     preference={formPreference.preference}
                     errors={errors}
                     callbacks={customCallbacks({
-                        data
+                        productConfigs
                     })}
                 />
             </div>

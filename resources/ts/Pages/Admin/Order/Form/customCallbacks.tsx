@@ -1,49 +1,64 @@
 import { FieldInputFormProps } from "blu/Components/types/Field"
+import IndexReferenceForm from "@/Components/Reference/IndexReferenceForm"
+import * as project_constants from "../../Project/constants"
+import * as product_constants from "../../Product/constants"
 import * as user_constants from "../../User/constants"
-import IndexChoiceForm from "@/Components/Reference/IndexChoiceForm"
-import Input from "blu/Components/Form/Field/Input"
-import axios from 'axios'
-import { useState } from "react"
-import { toast } from "react-toastify"
-import Select from "blu/Components/Form/Field/Select"
-import BelongsTo from "blu/Components/Form/Field/BelongsTo"
+
+
 import {} from "lodash"
 
 declare var route
 
 const customCallbacks = ({
-    data,
+    projectConfigs,
+    productConfigs,
+    userConfigs,
 }) =>
 {
     return {
-        'user': (props: FieldInputFormProps) => {
-            const {
-                config,
-                fieldKey,
-                fieldConfig,
-                data,
-                setData,
-                fieldData,
-                setFieldData,
-            } = props
-            const userProps = JSON.parse(JSON.stringify(props)) // 必要
-            const newFieldConfig = {...fieldConfig}
-            if (props.data.product && userProps.data.product.user)
-            {
-                // userProps.config.user.options = Object.assign(userProps.config.user.options, userProps.data.product.user)
-                newFieldConfig.options = Object.assign(userProps.config.user.options, userProps.data.product.user)
-            }
-
-            console.log('data',data)
-
-            return <BelongsTo
+        'project': (props: FieldInputFormProps) => {
+            const { config, data, setData } = props
+            return <IndexReferenceForm
+                modalTitle='プロジェクト - 参照'
+                apiUrl={route(project_constants.API_ROUTE)}
+                fieldKey={'project'}
                 config={config}
-                fieldKey={fieldKey}
-                fieldConfig={newFieldConfig}
                 data={data}
                 setData={setData}
-                fieldData={fieldData}
-                setFieldData={setFieldData}
+                referenceConfigs={projectConfigs}
+                index_preference_key={project_constants.INDEX_PREFERENCE_KEY}
+                search_preference_key={project_constants.SEARCH_PREFERENCE_KEY}
+            />
+        },
+
+        'product': (props: FieldInputFormProps) => {
+            const { config, data, setData } = props
+            const apiUrl = data.user ? route(product_constants.API_ROUTE, {user_id: data.user.id}) : route(product_constants.API_ROUTE)
+            return <IndexReferenceForm
+                modalTitle='材料データ - 参照'
+                apiUrl={apiUrl}
+                fieldKey={'product'}
+                config={config}
+                data={data}
+                setData={setData}
+                referenceConfigs={productConfigs}
+                index_preference_key={product_constants.INDEX_PREFERENCE_KEY}
+                search_preference_key={product_constants.SEARCH_PREFERENCE_KEY}
+            />
+        },
+        'user': (props: FieldInputFormProps) => {
+            const { config, data, setData } = props
+            const apiUrl = data.product ? route(user_constants.API_ROUTE, {product_id: data.product.id}) : route(user_constants.API_ROUTE)
+            return <IndexReferenceForm
+                modalTitle='仕入れ先 - 参照'
+                apiUrl={apiUrl}
+                fieldKey={'user'}
+                config={config}
+                data={data}
+                setData={setData}
+                referenceConfigs={userConfigs}
+                index_preference_key={user_constants.INDEX_PREFERENCE_KEY}
+                search_preference_key={user_constants.SEARCH_PREFERENCE_KEY}
             />
         },
     }

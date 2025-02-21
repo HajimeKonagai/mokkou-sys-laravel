@@ -5,6 +5,7 @@ namespace App\Console\Commands\Dev;
 use Illuminate\Console\Command;
 
 use App\Models\Product;
+use App\Models\Project;
 use App\Models\User;
 use App\Models\Order;
 use App\Models\OrderDetail;
@@ -51,6 +52,11 @@ class CreateDemoData extends Command
         foreach ($demo_data['product'] as $product)
         {
             \Blu\Save::saveTransaction(collect($product), new Product, config('blu.product.config'), $useDefault = true);
+        }
+
+        foreach ($demo_data['project'] as $project)
+        {
+            \Blu\Save::saveTransaction(collect($project), new Project, config('blu.project.config'), $useDefault = true);
         }
 
         foreach ($demo_data['order'] as $order)

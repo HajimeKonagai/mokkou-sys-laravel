@@ -16,6 +16,7 @@ return [
         'code' => [
             'label' => '材料コード',
             'type' => 'text',
+            'size' => 30,
             'search' => [
                 'code' => [
                     'label' => '材料コード',
@@ -29,6 +30,7 @@ return [
         'name' => [
             'label' => '商品名',
             'type' => 'text',
+            'size' => 50,
             'search' => [
                 'name' => [
                     'label' => '商品名',
@@ -43,6 +45,11 @@ return [
             'label' => '仕入先',
             'type' => 'belongsToMany',
             'search' => [
+                'user_id' => [
+                    'label' => '仕入先 ID',
+                    'type' => false,
+                    'field' => 'user.id',
+                ],
                 'user_email' => [
                     'label' => '仕入先 メールアドレス',
                     'type' => 'text',
@@ -59,6 +66,9 @@ return [
             'belongsToMany' => [
                 'label' => 'name',
             ],
+            'IndexChoice' => [
+                'preview' => 'name',
+            ]
         ],
 
         // 単位
@@ -78,6 +88,7 @@ return [
         'price' => [
             'label' => '単価',
             'type' => 'text',
+            'after' => '円',
             'search' => [
                 'price_from' => [
                     'label' => '単価(〜から)',
@@ -135,8 +146,8 @@ return [
         'code',
         'name',
         // 'user',
-        'unit',
         'price',
+        'unit',
         // 'created_at',
         // 'updated_at',
     ],
@@ -147,13 +158,9 @@ return [
         ['user_name', 'user_email'],
     ],
     'form' => [
-        'id',
         'code',
         'name',
-        'unit',
-        'price',
+        ['unit', 'price'],
         'user',
-        // 'created_at',
-        // 'updated_at',
     ],
 ];

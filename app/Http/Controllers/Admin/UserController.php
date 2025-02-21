@@ -68,13 +68,8 @@ class UserController extends Crud
         $config['password_confirmation']['required'] = true;
         return Inertia::render(static::viewDir().'Create', [
             'config' => $config,
-            'formConfig' => [
-                'name',
-                'email',
-                'password',
-                'password_confirmation',
-                'product',
-            ],
+            'formConfig' => static::formConfig(),
+            'productConfigs' => config('blu.product'),
         ]);
 
     }
@@ -86,17 +81,11 @@ class UserController extends Crud
         $config = static::config();
         $config['password']['description'] = 'パスワードの変更時のみ入力してください';
         $config['password_confirmation']['description'] = 'パスワードの変更時のみ入力してください';
-
         return Inertia::render(static::viewDir().'Edit', [
             'config' => $config,
             'item' => $id,
-            'formConfig' => [
-                'name',
-                'email',
-                'password',
-                'password_confirmation',
-                'product',
-            ],
+            'formConfig' => static::formConfig(),
+            'productConfigs' => config('blu.product'),
         ]);
     }
 
@@ -104,33 +93,37 @@ class UserController extends Crud
     {
         $this->validator($request->all())->validate();
 
-        // event(new Registered($user = $this->_create($request->all())));
-        $mainModel = static::mainModel();
-        $item = new $mainModel;
-        $input = [
-            'name' => $request->input('name'),
-            'email' => $request->input('email'),
-            'password' => Hash::make($request->input('password')),
-            'is_admin' => 0,
-            'product' => $request->input('product'),
-        ];
-        $result = \Blu\Save::saveTransaction($input, $item, static::config(), $useDefault = true);
+        try
+        {
+            \DB::beginTransaction();
+
+            // event(new Registered($user = $this->_create($request->all())));
+            $item = MainModel::create([
+                'name' => $request->input('name'),
+                'email' => $request->input('email'),
+                'password' => Hash::make($request->input('password')),
+                'is_admin' => 0,
+                'product' => $request->input('product'),
+            ]);
+            $result = \Blu\Save::save(['product' => $request->input('product')], $item, static::config(), $useDefault = false);
+
+            if (!$result) throw new \Exception();
+
+            \DB::commit();
+        }
+        catch (Throwable $e)
+        {
+            \DB::rollBack();
+
+            if ($request->expectsJson()) return response()->json(['message' => '保存に失敗しました。'], 500);
+            return back()->withErrors('保存に失敗しました。');
+        }
 
         if ($request->expectsJson())
         {
-            if (!$result)
-            {
-                return response()->json(['message' => '保存に失敗しました。'], 500);
-            }
-
             return response()->json([
                 $result,
             ], 201);
-        }
-
-        if (!$result)
-        {
-            return back()->withErrors('保存に失敗しました。');
         }
 
         return redirect()
@@ -140,45 +133,51 @@ class UserController extends Crud
 
     public function update(Request $request, MainModel $id)
     {
-        $input = [];
-        if ($request->password || $request->password_confirmation)
+        try
         {
-            $this->validator($request->all(), $id->id)->validate();
-            $input = [
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'password' => Hash::make($request['password']),
-                'product' => $request->input('product'),
-            ];
-            $id->save();
+            \DB::beginTransaction();
+            if ($request->password || $request->password_confirmation)
+            {
+                $this->validator($request->all(), $id->id)->validate();
+                $id->fill([
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'password' => Hash::make($request['password']),
+                    'product' => $request->input('product'),
+                ]);
+                $id->save();
+            }
+            else
+            {
+                $this->validator_no_password($request->all(), $id->id)->validate();
+                $id->fill([
+                    'name' => $request['name'],
+                    'email' => $request['email'],
+                    'product' => $request->input('product'),
+                ]);
+                $id->save();
+            }
+
+            $result = \Blu\Save::save(['product' => $request->input('product')], $id, static::config(), $useDefault = false);
+
+            if (!$result) throw new \Exception();
+
+            \DB::commit();
         }
-        else
+        catch (Throwable $e)
         {
-            $this->validator_no_password($request->all(), $id->id)->validate();
-            $input = [
-                'name' => $request['name'],
-                'email' => $request['email'],
-                'product' => $request->input('product'),
-            ];
+            \DB::rollBack();
+
+            if ($request->expectsJson()) return response()->json(['message' => '保存に失敗しました。'], 500);
+            return back()->withErrors('保存に失敗しました。');
         }
 
-        $result = \Blu\Save::saveTransaction($input, $id, static::config(), $useDefault = false);
 
         if ($request->expectsJson())
         {
-            if (!$result)
-            {
-                return response()->json(['message' => '保存に失敗しました。'], 500);
-            }
-
             return response()->json([
                 $result,
             ], 204);
-        }
-
-        if (!$result)
-        {
-            return back()->withErrors('error', '保存に失敗しました。');
         }
 
         return redirect()
@@ -186,7 +185,7 @@ class UserController extends Crud
             ->with('success', '更新しました。');
     }
 
-    public function destroy(MainModel $id)
+    public function destroy(Request $request, MainModel $id)
     {
         return static::_destroy($request, $id);
     }
