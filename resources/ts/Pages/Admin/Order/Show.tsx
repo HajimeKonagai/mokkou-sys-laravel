@@ -18,13 +18,11 @@ import {
     CONTROL_DELETE_LABEL,
 } from './constants'
 import customCallbacks from './View/customCallbacks'
-import OrderProcessControl from './Form/OrderProcessControl';
+import OrderProcessControl from './View/OrderProcessControl';
 
 declare var route
 
 const Show = ({
-    auth,
-    account,
     config,
     item,
     formConfig = ['*'],
@@ -54,8 +52,6 @@ const Show = ({
     }
 
     return (<Layout
-        auth={auth}
-        account={account}
         title={`${TITLE} - ${TITLE_SHOW}「id: ${item.id}」`}
         className={`${CLASS_NAME} show`}
     >

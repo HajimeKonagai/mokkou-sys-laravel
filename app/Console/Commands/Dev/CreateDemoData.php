@@ -43,7 +43,7 @@ class CreateDemoData extends Command
         {
             User::create([
                 'name' =>  $user['name'],
-                'email' => uniqid().'@example.com',
+                'email' => $user['email'],
                 'password' => Hash::make('12121212'),
                 'is_admin' => false,
             ]);

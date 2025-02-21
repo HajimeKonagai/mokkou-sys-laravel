@@ -24,7 +24,7 @@ import {
     CONTROL_DELETE_LABEL,
 } from './constants'
 import customCallbacks from './View/customCallbacks';
-import OrderProcessControl from './Form/OrderProcessControl';
+import OrderProcessControl from './View/OrderProcessControl';
 
 
 declare var route

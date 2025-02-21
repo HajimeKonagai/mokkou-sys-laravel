@@ -3,6 +3,7 @@ import EchoClass from 'laravel-echo';
 import PusherClass from 'pusher-js';
 const Pusher = PusherClass;
 
+console.log('env', import.meta.env.VITE_BROADCAST_CONNECTION)
 const Echo = import.meta.env.VITE_BROADCAST_CONNECTION == 'reverb' ?
     new EchoClass({
         broadcaster: 'reverb',

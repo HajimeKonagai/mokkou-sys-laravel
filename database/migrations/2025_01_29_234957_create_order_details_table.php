@@ -25,7 +25,7 @@ return new class extends Migration
 
             $table->unsignedBigInteger('user_id')->nullable()->default(null);
             $table->string('user_name')->nullable()->default(null);
-            $table->date('deadline')->nullable()->default(null);
+            $table->date('delivery_at')->nullable()->default(null);
 
 
             $table->timestamps();

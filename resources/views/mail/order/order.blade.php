@@ -20,6 +20,6 @@
     </dd>
 </dl>
 
-<a class="button" href="{{ route('admin.dashboard') }}">確認する&nbsp;&raquo;</a>
+<a class="button" href="{{ route('supplier.dashboard') }}">確認する&nbsp;&raquo;</a>
 
 @endsection

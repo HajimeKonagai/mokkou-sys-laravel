@@ -2,9 +2,11 @@ const customCallbacks = ({
 }) =>
 {
     return {
-        'deadline': () => {
+        /*
+        'delivery_at': () => {
             return (<div>sampleCallback</div>)
         }
+        */
     }
 }
 

@@ -158,6 +158,7 @@ class Query
 						$relationTableName = $relationModel->getTable();
 
 						$q->leftJoin($relationTableName, $relationTableName.'.'.$relationKeyName, '=', $ownerTable.'.'.$foreignKeyName)
+							->select($ownerTable.'.*') // カラムの重複を防止 TODO: select がすでに設定されている場合
 							->orderBy($relationTableName.'.'.$orderFields[1], $request->order);
 						// Log::info($q->toSql());
 					}

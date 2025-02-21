@@ -19,7 +19,7 @@ import { hasContext } from 'blu/Laravel/Layout/ContextMenusTop'
 declare var route
 
 const SupplierLayout = ({
-    title,
+    title = '',
     children,
     className='',
 }) =>
@@ -31,12 +31,12 @@ const SupplierLayout = ({
         title={title}
         home={<>
                 <div>
-                    <Link href={route('admin.dashboard')}>Dashboard</Link>
+                    <Link href={route('supplier.dashboard',  {
+                        order: 'asc',
+                        orderBy: 'order_deadline_at'
+                    })}>Dashboard</Link>
                 </div>
             </>}
-        menus={<MenuContainer
-            menus={menus}
-        />}
         className={className}
         width={300}
     >

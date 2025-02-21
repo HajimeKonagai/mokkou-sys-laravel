@@ -2,9 +2,18 @@
 
 return [
     'user' => [
-        [ 'name' => '鉄鋼商事' ],
-        [ 'name' => '建材プロ' ],
-        [ 'name' => 'メタルテック' ],
+        [
+            'name' => '鉄鋼商事',
+            'email' => 'alex.functiontales@gmail.com',
+        ],
+        [
+            'name' => '建材プロ',
+            'email' => 'otegami@tsukitsume.com',
+        ],
+        [
+            'name' => 'メタルテック',
+            'email' => 'n.globe.us@gmail.com',
+        ],
     ],
 
 
@@ -58,7 +67,7 @@ return [
                     'unit' => '枚',
                     'price' => '10000',
                     'user' => ['id' => 2],
-                    'deadline' => '2024-01-15',
+                    'delivery_at' => '2024-01-15',
                 ],
                 [
                     'seq' => 2,
@@ -69,7 +78,6 @@ return [
                     'unit' => '枚',
                     'price' => '12000',
                     'user' => ['id' => 3],
-                    'deadline' => '2024-02-20',
                 ],
             ],
         ],
@@ -87,7 +95,6 @@ return [
                     'unit' => '枚',
                     'price' => '15000',
                     'user' => ['id' => 4],
-                    'deadline' => '2024-03-10',
                 ],
             ],
         ],

@@ -11,6 +11,8 @@ use App\Models\OrderDetail;
 use App\Mail\Order\OrderMail;
 use App\Mail\Order\CancelMail;
 
+use App\Events\OrderEvent;
+
 class OrderProcessController extends Controller
 {
     public function order(Order $order)
@@ -34,6 +36,8 @@ class OrderProcessController extends Controller
         foreach ($mailParams as $user_id => $mailParam)
         {
             \Mail::to($mailParam['user']->email)->send(new OrderMail($mailParam));
+
+            event(new OrderEvent('success', '発注がありました。', $mailParam['order'], $mailParam['user']));
         }
 
         $order->status = 1; // 発注済
@@ -63,6 +67,7 @@ class OrderProcessController extends Controller
         foreach ($mailParams as $user_id => $mailParam)
         {
             \Mail::to($mailParam['user']->email)->send(new CancelMail($mailParam));
+            event(new OrderEvent('warning', '発注がキャンセルされました。', $mailParam['order'], $mailParam['user']));
         }
 
         $order->status = 0; // 未発注
@@ -80,6 +85,20 @@ class OrderProcessController extends Controller
         if ($order->status != 1) // 発注済でない
         {
             return back()->with('error', '発注済の発注ではありません。');
+        }
+
+        $ordered_at = date('Y-m-d H:i:s', strtotime($order->ordered_at));
+        $mailParams = static::mailParams($order, $ordered_at);
+        // ユーザーが設定されていないものがないか
+        if (!$mailParams)
+        {
+            return back()->with('error', '仕入れ先が未設定のアイテムがあります。');
+        }
+
+        // 通知のみ送る
+        foreach ($mailParams as $user_id => $mailParam)
+        {
+            event(new OrderEvent('success', '納品が確認されました。', $mailParam['order'], $mailParam['user']));
         }
 
         $order->status = 2; // 納品済

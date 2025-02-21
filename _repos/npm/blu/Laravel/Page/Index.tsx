@@ -28,7 +28,7 @@ const Index = ({
     {
         Object.keys(customCells).map((key)=> {
             const newCustomCell = {...configForIndex[key]}
-            newCustomCell.label = ('label' in configForIndex[key] ? configForIndex[key].label : key) + '(*)'
+            newCustomCell.label = <>{('label' in configForIndex[key] ? configForIndex[key].label : key)}(*)</>
             configForIndex[key] = newCustomCell
         })
     }

@@ -165,7 +165,7 @@ return [
                         'description' => '「材料データ」の選択によって自動的に絞り込まれます',
                     ],
                     // 納期
-                    'deadline' => [
+                    'delivery_at' => [
                         'label' => '納期',
                         'type' => 'raw',
                     ],

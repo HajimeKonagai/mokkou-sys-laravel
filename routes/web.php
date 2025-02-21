@@ -15,6 +15,7 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderProcessController;
 
 
+
 if (! function_exists('crudPage') )
 {
     function crudPage($route, $class, $name = false)
@@ -47,6 +48,13 @@ Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' =
     Route::post('order_process/order/{order}', [OrderProcessController::class, 'order'])->name('order_process.order');
     Route::post('order_process/cancel/{order}', [OrderProcessController::class, 'cancel'])->name('order_process.cancel');
     Route::post('order_process/delivered/{order}', [OrderProcessController::class, 'delivered'])->name('order_process.delivered');
+});
+
+
+Route::group(['middleware' => ['auth'], 'prefix' => 'supplier', 'as' => 'supplier.'], function ()
+{
+    Route::get('dashboard', \App\Http\Controllers\Supplier\DashboardController::class)->name('dashboard');
+    Route::post('dashboard/{orderDetail}', [\App\Http\Controllers\Supplier\DashboardController::class, 'store'])->name('dashboard.store');
 });
 
 
