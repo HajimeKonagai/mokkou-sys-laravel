@@ -1,4 +1,4 @@
-export const TITLE = 'プロジェクト'
+export const TITLE = '現場'
 export const ROUTE_PREFIX = 'admin.project'
 export const API_ROUTE_PREFIX = 'api.admin.project'
 export const SOFT_DELETE = false

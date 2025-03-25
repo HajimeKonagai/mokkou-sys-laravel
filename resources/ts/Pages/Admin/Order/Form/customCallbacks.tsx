@@ -19,7 +19,7 @@ const customCallbacks = ({
         'project': (props: FieldInputFormProps) => {
             const { config, data, setData } = props
             return <IndexReferenceForm
-                modalTitle='プロジェクト - 参照'
+                modalTitle='現場 - 参照'
                 apiUrl={route(project_constants.API_ROUTE)}
                 fieldKey={'project'}
                 config={config}

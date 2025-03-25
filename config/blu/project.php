@@ -11,13 +11,28 @@ return [
                 ],
             ]
         ],
+        'customer_id' => [
+            'label' => '顧客',
+            'type' => 'select',
+            'options' => [
+                '' => '',
+            ],
+            'size' => 50,
+            'search' => [
+                'customer_id' => [
+                    'label' => '顧客',
+                    'type' => 'select',
+                    'options' => [ '' => '' ],
+                ],
+            ],
+        ],
         'name' => [
-            'label' => 'プロジェクト名',
+            'label' => '現場名',
             'type' => 'text',
             'size' => 50,
             'search' => [
                 'name' => [
-                    'label' => 'プロジェクト名',
+                    'label' => '現場名',
                     'type' => 'text',
                     'compare' => 'like',
                     'placeholder' => 'あいまい検索',
@@ -25,21 +40,51 @@ return [
             ],
             'required' => true,
         ],
-        'dev' => [
-            'type' => 'raw',
-            'description' => '必要な入力項目は作りますので洗い出してください',
-        ]
+        'address' => [
+            'label' => '住所',
+            'type' => 'textarea',
+            'size' => 'full',
+            'search' => [
+                'address' => [
+                    'label' => '住所',
+                    'type' => 'text',
+                    'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
+                ],
+            ],
+        ],
+        'staff' => [
+            'label' => '担当者',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'staff' => [
+                    'label' => '担当者',
+                    'type' => 'text',
+                    'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
+                ],
+            ],
+        ],
     ],
     'index' => [
         '_control',
         'id',
+        'customer_id',
         'name',
+        'address',
+        'staff',
     ],
     'search' => [
+        'customer_id',
         'name',
+        'address',
+        'staff',
     ],
     'form' => [
+        'customer_id',
         'name',
-        'dev',
+        'address',
+        'staff',
     ],
 ];

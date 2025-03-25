@@ -1,4 +1,4 @@
-export const TITLE = 'Product'
+export const TITLE = '材料データ'
 export const ROUTE_PREFIX = 'admin.product'
 export const API_ROUTE_PREFIX = 'api.admin.product'
 export const SOFT_DELETE = false

@@ -1,7 +1,7 @@
 import Layout from '@/Layouts/AdminLayout'
 import { useQueryClient } from 'react-query';
 import { Link } from '@inertiajs/react';
-import PageIndex from 'blu/Laravel/Page/Index'
+import PageIndex from '@/Components/PageIndex/index'
 import useForm, { toastErrors } from "blu/Laravel/classes/useForm"
 import { PreferenceApi, PreferenceLocalStorage } from 'blu/Components/Preference/Save'
 import ShowIcon from '@mui/icons-material/Visibility';
@@ -23,10 +23,17 @@ import {
     CONTROL_EDIT_LABEL,
     CONTROL_DELETE_LABEL,
 } from './constants'
+import { useModalContext } from 'blu/ContextComponents/Modal';
+import ModalCreate from './Modal/Create';
+import formCustomCallbacks from './Form/customCallbacks';
 
 declare var route
 
-const Control = ({ data }) =>
+const Control = ({
+    data,
+    formConfig = ['*'],
+    formCallbacks,
+}) =>
 {
     const queryClient = useQueryClient()
     const { delete: destroy, processing } = useForm({})
@@ -50,6 +57,9 @@ const Control = ({ data }) =>
         }
     }
 
+
+
+
     return (<div className='button-group'>
         <a className='small button view' href={route(SHOW_ROUTE, { id: data.id })}><ShowIcon />表示</a>
         <Link className='small button edit' href={route(EDIT_ROUTE, { id: data.id })}><EditIcon />{CONTROL_EDIT_LABEL}</Link>
@@ -64,6 +74,8 @@ const Index = ({
     config,
     searchConfig = [],
     indexConfig = [],
+    formConfig,
+    userConfigs,
 }) =>
 {
     // const searchPreference = PreferenceApi({
@@ -80,12 +92,14 @@ const Index = ({
         defaultPreference: indexConfig
     })
 
+    const formCallbacks = formCustomCallbacks({
+        userConfigs
+    })
+
     return (<Layout
-        auth={auth}
         title={`${TITLE} - ${TITLE_INDEX}`}
         className={`${CLASS_NAME} index`}
     >
-
         <PageIndex
             config={config}
             searchPreference={searchPreference}
@@ -95,11 +109,25 @@ const Index = ({
             customCells={{
                 '_control': {
                     type: Control,
-                    props: {},
+                    props: {
+                        formConfig,
+                        userConfigs
+                    },
                     label: CONTROL_NAME
                 },
             }}
+
+            formCallbacks={formCallbacks}
         />
+
+        <section>
+            <header>
+                <ModalCreate
+                    config={config}
+                    userConfigs={userConfigs}
+                />
+            </header>
+        </section>
     </Layout>)
 }
 

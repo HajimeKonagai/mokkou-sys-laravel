@@ -1,4 +1,4 @@
-export const TITLE = '仕入れ先'
+export const TITLE = '仕入先'
 export const ROUTE_PREFIX = 'admin.user'
 export const API_ROUTE_PREFIX = 'api.admin.user'
 export const SOFT_DELETE = false

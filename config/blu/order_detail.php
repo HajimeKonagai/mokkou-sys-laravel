@@ -7,39 +7,89 @@ return [
             'label' => '材料コード',
             'type' => 'text',
         ],
+        // 現場
+        'project' => [
+            'label' => '現場名',
+            'type' => 'text',
+            'size' => 30,
+            'search' => [
+                'name' => [
+                    'label' => '材料名',
+                    'field' => 'name',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+            'sort' => true,
+            'attribute' => 'project_name',
+        ],
         // 材料名
         'name' => [
             'label' => '材料名',
             'type' => 'text',
             'size' => 30,
+            'search' => [
+                'name' => [
+                    'label' => '材料名',
+                    'field' => 'name',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+            'sort' => true,
         ],
         // 単価
         'price' => [
             'label' => '単価',
             'type' => 'text',
+            'search' => [
+                'price_from' => [
+                    'label' => '単価〜から',
+                    'field' => 'price',
+                    'type' => 'number',
+                    'compare' => '>=',
+                ],
+                'price_to' => [
+                    'label' => '単価〜まで',
+                    'field' => 'price',
+                    'type' => 'number',
+                    'compare' => '<=',
+                ],
+            ],
         ],
         // 数量
         'quantity' => [
             'label' => '数量',
             'type' => 'number',
             'size' => 10,
+            'search' => [
+                'price_from' => [
+                    'label' => '数量〜から',
+                    'field' => 'quantity',
+                    'type' => 'number',
+                    'compare' => '>=',
+                ],
+                'price_to' => [
+                    'label' => '数量〜まで',
+                    'field' => 'quantity',
+                    'type' => 'number',
+                    'compare' => '<=',
+                ],
+            ],
         ],
         // 単位
         'unit' => [
             'label' => '単位',
             'type' => 'text',
             'size' => 8,
-        ],
-
-        // 仕入先
-        'user' => [
-            'label' => '仕入れ先',
-            'type' => 'belongsTo',
-            'IndexReference' => [
-                'preview' => ['name'],
+            'search' => [
+                'name' => [
+                    'label' => '材料名',
+                    'field' => 'name',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
             ],
-            'attribute' => 'user_name',
-            'description' => '「材料データ」の選択によって自動的に絞り込まれます',
         ],
 
         'order_code' => [
@@ -59,6 +109,7 @@ return [
         'delivery_at' => [
             'label' => '納期',
             'type' => 'raw',
+            'sort' => true,
         ],
     ],
     'index' => [

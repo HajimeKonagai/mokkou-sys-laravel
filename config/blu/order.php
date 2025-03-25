@@ -15,13 +15,13 @@ return [
             'attribute' => 'code',
             'description' => '保存時に自動採番されます。'
         ],
-        // プロジェクト
+        // 現場
         'project' => [
-            'label' => 'プロジェクト',
+            'label' => '現場',
             'type' => 'belongsTo',
             'search' => [
                 'project_name' => [
-                    'label' => 'プロジェクト名',
+                    'label' => '現場名',
                     'field' => 'project.name',
                     'type' => 'text',
                     'compare' => 'like',
@@ -215,7 +215,7 @@ return [
         '_control',
         '_order_control',
         'deadline_at',
-        'id',
+        // 'id',
         'project',
         'detail',
     ],

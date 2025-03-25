@@ -1,4 +1,4 @@
-export const TITLE = 'Order'
+export const TITLE = '発注'
 export const ROUTE_PREFIX = 'admin.order'
 export const API_ROUTE_PREFIX = 'api.admin.order'
 export const SOFT_DELETE = false

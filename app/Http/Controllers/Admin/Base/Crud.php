@@ -18,7 +18,7 @@ abstract class Crud extends Controller
 
     protected static function viewDir()
     {
-        return 'Admin/'.last(explode('\\', static::mainModel())) . '/';
+        return 'Admin/'.last(explode('\\', static::mainModel()));// . '/';
     }
 
     protected static function routePrefix()
@@ -122,6 +122,7 @@ abstract class Crud extends Controller
             return back()->withErrors('保存に失敗しました。');
         }
 
+        return back()->with('success', '保存しました。');
         return redirect()
             ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
             ->with('success', '保存しました。');

@@ -4,14 +4,20 @@ import { Z_INDEX_MODAL_WRAPPER } from './zIndex'
 
 const ModalContext = createContext({
 	modal: <></>,
-	openModal: ({}: {title: string, className: string, content: ReactNode, closeCallback?: () => void | null}) => { console.log('origin') },
+	openModal: ({}: {
+		title: string,
+		className: string,
+		content: ReactNode,
+		closeCallback?: () => void | null,
+		preventCloseCallback?: () => boolean,
+	}) => { console.log('origin') },
 	closeModal: () => {},
 });
 
 
 const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 {
-	const [ modal, setModal ] = useState(null);
+	const [ modal, setModal ] = useState(null)
 
 	const cleanUp = (e) =>
 	{
@@ -25,6 +31,7 @@ const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 		title = '',
 		className = '',
 		closeCallback = null,
+		preventCloseCallback = null
 	}) =>
 	{
 		setModal({
@@ -32,16 +39,23 @@ const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 			title: title,
 			className: className,
 			closeCallback: closeCallback,
+			preventCloseCallback: preventCloseCallback
 		});
 	}
 
 	const closeModal = () =>
 	{
-		setModal(null)
 		if (modal && 'closeCallback' in modal && modal.closeCallback && typeof modal.closeCallback === 'function')
 		{
 			modal.closeCallback()
 		}
+
+		if (modal && 'preventCloseCallback' in modal && modal.preventCloseCallback && typeof modal.preventCloseCallback === 'function')
+		{
+			if (modal.preventCloseCallback()) return
+		}
+
+		setModal(null)
 	}
 
 	return (

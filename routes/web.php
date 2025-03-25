@@ -15,6 +15,19 @@ use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\OrderProcessController;
 
 
+if (! function_exists('page') )
+{
+    function page($route, $class, $name = false)
+    {
+        if (!$name) $name = $route;
+        if (strpos($name, '/')) $name = str_replace('/', '.', $name);
+        Route::get   ($route.'',                $class)->name($name.'.index');
+        Route::post  ($route.'',                [$class, 'store'  ])->name($name.'.store');
+        Route::put   ($route.'/{id}',         [$class, 'update' ])->name($name.'.update');
+        Route::delete($route.'/{id}',         [$class, 'destroy'])->name($name.'.destroy');
+    }
+}
+
 
 if (! function_exists('crudPage') )
 {
@@ -42,7 +55,7 @@ Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' =
     crudPage('project', ProjectController::class);
     crudPage('order', OrderController::class);
     crudPage('user', UserController::class);
-    crudPage('product', ProductController::class);
+    page('product', ProductController::class);
 
 
     Route::post('order_process/order/{order}', [OrderProcessController::class, 'order'])->name('order_process.order');

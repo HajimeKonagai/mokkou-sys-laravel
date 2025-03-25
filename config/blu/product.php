@@ -12,6 +12,7 @@ return [
             ],
             'sort' => true,
         ],
+
         // 材料コード
         'code' => [
             'label' => '材料コード',
