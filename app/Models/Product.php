@@ -3,16 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Product extends Model
 {
-    protected $guarded = ['id', 'created_at', 'updated_at'];
+    protected $with = ['product_material'];
 
-    protected $with = ['user'];
-
-    public function user(): BelongsToMany
+    public function product_material(): HasMany
     {
-        return $this->belongsToMany(User::class, 'product_user', 'user_id', 'product_id')->withOut('product');
+        return $this->hasMany(ProductMaterial::class)->withOut('product');
     }
 }

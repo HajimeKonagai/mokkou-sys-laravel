@@ -9,159 +9,124 @@ return [
                     'label' => 'ID',
                     'type' => 'text',
                 ],
-            ],
-            'sort' => true,
+            ]
         ],
-
-        // 材料コード
-        'code' => [
-            'label' => '材料コード',
-            'type' => 'text',
-            'size' => 30,
-            'search' => [
-                'code' => [
-                    'label' => '材料コード',
-                    'type' => 'text',
-                    'compare' => 'like',
-                ],
-            ],
-            'sort' => true,
-        ],
-        // 商品名
         'name' => [
-            'label' => '商品名',
+            'label' => '品目名',
             'type' => 'text',
             'size' => 50,
             'search' => [
                 'name' => [
-                    'label' => '商品名',
+                    'label' => '品目名',
                     'type' => 'text',
                     'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
                 ],
             ],
-            'sort' => true,
-        ],
-        // 仕入先
-        'user' => [
-            'label' => '仕入先',
-            'type' => 'belongsToMany',
-            'search' => [
-                'user_id' => [
-                    'label' => '仕入先 ID',
-                    'type' => false,
-                    'field' => 'user.id',
-                ],
-                'user_email' => [
-                    'label' => '仕入先 メールアドレス',
-                    'type' => 'text',
-                    'field' => 'user.email',
-                ],
-                'user_name' => [
-                    'label' => '仕入先 仕入先名',
-                    'type' => 'text',
-                    'compare' => 'like',
-                    'field' => 'user.name',
-                ],
-            ],
-            'sort' => true,
-            'belongsToMany' => [
-                'label' => 'name',
-            ],
-            'IndexChoice' => [
-                'preview' => 'name',
-            ]
-        ],
-
-        // 単位
-        'unit' => [
-            'label' => '単位',
-            'type' => 'text',
-            'search' => [
-                'unit' => [
-                    'label' => '単位',
-                    'type' => 'text',
-                    'compare' => 'like',
-                ],
-            ],
-            'sort' => true,
+            'required' => true,
         ],
         // 単価
         'price' => [
             'label' => '単価',
             'type' => 'text',
-            'after' => '円',
-            'search' => [
-                'price_from' => [
-                    'label' => '単価(〜から)',
-                    'type' => 'number',
-                    'compare' => '>=',
-                ],
-                'price_to' => [
-                    'label' => '単価(〜まで)',
-                    'type' => 'number',
-                    'compare' => '<=',
+            'after' => '×',
+            '_calcMaterials'=> true,
+        ],
+        // 数量
+        'quantity' => [
+            'label' => '数量',
+            'type' => 'number',
+            'size' => 10,
+        ],
+        // 単位
+        'unit' => [
+            'label' => '単位',
+            'type' => 'text',
+            'size' => 8,
+        ],
+        'total' => [
+            'label' => '合計',
+            'type' => 'number',
+            'size' => 10,
+        ],
+
+        // 仕入先と金額設定
+        'product_material' => [
+            'label' => '材料データなど',
+            'type' => 'hasMany',
+            'hasMany' => [
+                'config' => [
+                    'material' => [
+                        'label' => '材料データ',
+                        'type' => 'belongsTo',
+                        'IndexReference' => [
+                            'preview' => ['name'],
+                            'reference' => [
+                                'code' => 'code',
+                                'name' => 'name',
+                                'unit' => 'unit',
+                                'price' => 'price',
+                            ],
+                        ],
+                        'attribute' => 'material_name',
+                    ],
+                    'name' => [
+                        'label' => '名称',
+                        'type' => 'text',
+                    ],
+                    // 単価
+                    'price' => [
+                        'label' => '単価',
+                        'type' => 'text',
+                    ],
+                    // 数量
+                    'quantity' => [
+                        'label' => '数量',
+                        'type' => 'number',
+                        'size' => 10,
+                    ],
+                    // 単位
+                    'unit' => [
+                        'label' => '単位',
+                        'type' => 'text',
+                        'size' => 8,
+                    ],
+                    'total' => [
+                        'label' => '合計',
+                        'type' => 'text',
+                        'size' => 10,
+                    ],
                 ],
             ],
             'sort' => true,
-        ],
-        'created_at' => [
-            'type' => false,
-            'search' => [
-                'created_at_from' => [
-                    'label' => '作成日時(〜から)',
-                    'type' => 'datetime-local',
-                    'compare' => '>=',
-                    'placeholder' => '',
-                ],
-                'crearted_at_to' => [
-                    'label' => '作成日時(〜まで)',
-                    'type' => 'datetime-local',
-                    'compare' => '<=',
-                    'placeholder' => '',
+            'HasManyUnique' => [
+                'unique' => 'material',
+                'attribute' => [
+                    'material_name' => 'name',
+                    'name' => 'name',
+                    'price' => 'price',
                 ],
             ],
-            'sort' => true,
-        ],
-        'updated_at' => [
-            'type' => false,
-            'search' => [
-                'updated_at_from' => [
-                    'label' => '更新日時(〜から)',
-                    'type' => 'datetime-local',
-                    'compare' => '>=',
-                    'placeholder' => '',
-                ],
-                'updated_at_to' => [
-                    'label' => '更新日時(〜まで)',
-                    'type' => 'datetime-local',
-                    'compare' => '<=',
-                    'placeholder' => '',
-                ],
-            ],
-            'sort' => true,
-        ],
+        ], 
     ],
     'index' => [
         '_control',
-        // 'id',
-        'code',
+        'id',
         'name',
-        // 'user',
-        'price',
-        'unit',
-        // 'created_at',
-        // 'updated_at',
+        'total',
+        'product_material',
     ],
     'search' => [
-        // 'id',
-        ['code', 'name', 'unit'],
-        ['price_from', 'price_to'],
-        ['user_name', 'user_email'],
+        [
+            'name',
+        ],
     ],
     'form' => [
-        'code',
         'name',
-        ['unit', 'price'],
-        'user',
+        ['price',
+        'quantity',
+        'unit',
+        'total'],
+        'product_material',
     ],
 ];

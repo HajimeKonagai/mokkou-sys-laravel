@@ -9,19 +9,22 @@ const ModalContext = createContext({
 		className: string,
 		content: ReactNode,
 		closeCallback?: () => void | null,
-		preventCloseCallback?: () => boolean,
+		isCleanUp?: boolean,
 	}) => { console.log('origin') },
 	closeModal: () => {},
+	setPreventClose: (s: string) => {}
 });
 
 
 const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 {
 	const [ modal, setModal ] = useState(null)
+	const [ isCleanUp, setIsCleanUp ] = useState(false)
+	const [ preventClose, setPreventClose ] = useState<string|null>(null)
 
 	const cleanUp = (e) =>
 	{
-		setModal(null)
+		if (isCleanUp) setModal(null)
 	}
 	window.addEventListener('popstate', cleanUp)
 	document.addEventListener('inertia:before', cleanUp)
@@ -31,15 +34,17 @@ const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 		title = '',
 		className = '',
 		closeCallback = null,
-		preventCloseCallback = null
+		preventCloseCallback = null,
+		isCleanUp = true,
 	}) =>
 	{
+		setIsCleanUp(isCleanUp)
+		setPreventClose(null)
 		setModal({
 			content: content,
 			title: title,
 			className: className,
 			closeCallback: closeCallback,
-			preventCloseCallback: preventCloseCallback
 		});
 	}
 
@@ -50,9 +55,9 @@ const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 			modal.closeCallback()
 		}
 
-		if (modal && 'preventCloseCallback' in modal && modal.preventCloseCallback && typeof modal.preventCloseCallback === 'function')
+		if (modal && preventClose)
 		{
-			if (modal.preventCloseCallback()) return
+            if (!confirm(preventClose)) return
 		}
 
 		setModal(null)
@@ -64,6 +69,7 @@ const ModalContextProvider: React.VFC<{children: ReactNode}> = ({ children }) =>
 				modal,
 				openModal,
 				closeModal,
+				setPreventClose: (s) => setPreventClose(s)
 			}}
 		>
 			{ children }

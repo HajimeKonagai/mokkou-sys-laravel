@@ -20,7 +20,7 @@ const Previews = ({
     return (<div className="Previews">
         {Array.isArray(fieldData) && (<ul>
             {(fieldData).map((rowData) => (
-                <li className="flex items-center">
+                <li className="flex items-center" key={rowData.id}>
                     <>
                         {previewsByKeys(fieldConfig.IndexChoice?.preview, rowData).length > 0 && (<span className='previews Raw'>
                             {previewsByKeys(fieldConfig.IndexChoice?.preview, rowData).map((preview, i) => (<span className='preview' key={i}>{preview}</span>))}

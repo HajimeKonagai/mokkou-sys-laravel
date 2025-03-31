@@ -40,8 +40,8 @@ export const useBulk = ({
     // fieldData が array でなければ array であることを保証する TODO: bulk へ
     if (!Array.isArray(bulkData)) bulkData = []
 
-    // order のフィールドがあるかどうか、あれば並べ替え時をセットする。
-    const sortKeys = Object.keys(config).filter((key) => config[key]?.type == 'order')
+    // seq のフィールドがあるかどうか、あれば並べ替え時をセットする。
+    const sortKeys = Object.keys(config).filter((key) => config[key]?.type == 'seq')
 
     const add = () =>
     {

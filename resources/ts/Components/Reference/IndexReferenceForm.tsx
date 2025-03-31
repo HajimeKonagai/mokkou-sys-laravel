@@ -67,13 +67,39 @@ const IndexReferenceForm = ({
                 fieldConfig
             }) || confirm('すでに入力された値を上書きしますか?'))
             {
-                Object.keys(fieldConfig.IndexReference.reference).map((key) =>
+                Object.keys(fieldConfig.IndexReference.reference).map((keyFrom) =>
                 {
-                    const configKey = fieldConfig.IndexReference.reference[key];
-                    newData[configKey] = fieldData? ArrGet(fieldData, key) : 'default' in config[configKey] ? config[configKey].default: ''
+                    const keyTo = fieldConfig.IndexReference.reference[keyFrom]
+
+                    console.log(keyTo, keyFrom)
+                    if (isObject(keyTo) && 'field' in keyTo && 'reference' in keyTo)
+                    {
+                        const value = fieldData? ArrGet(fieldData, keyFrom) : 'default' in config[keyTo.field] ? config[keyTo].default: []
+                        const valArr = []
+                        value.map((v) => {
+                            const valRow = {}
+                            Object.keys(keyTo.reference).map((arrKeyFrom) =>
+                            {
+                                const arrConfig = keyTo.field in config ? config[keyTo.field] : {}
+                                const arrKeyTo = keyTo.reference[arrKeyFrom]
+                                const arrValue = value? ArrGet(v, arrKeyFrom) : 'default' in arrConfig[arrKeyTo] ? arrConfig[arrKeyTo].default: ''
+                                valRow[arrKeyTo] = arrValue
+                            })
+                            valArr.push(valRow)
+                        })
+                        console.log('valArr', valArr)
+                        newData[keyTo.field] = valArr
+                    }
+                    else
+                    {
+                        const value = fieldData? ArrGet(fieldData, keyFrom) : 'default' in config[keyTo] ? config[keyTo].default: ''
+                        newData[keyTo] = value
+                    }
                 })
             }
         }
+
+        console.log('newData', newData)
 
         setData(newData)
         closeModal()

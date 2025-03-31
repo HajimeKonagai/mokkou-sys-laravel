@@ -11,6 +11,20 @@ return [
                 ],
             ]
         ],
+        'name' => [
+            'label' => '現場名',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'name' => [
+                    'label' => '現場名',
+                    'type' => 'text',
+                    'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
+                ],
+            ],
+            'required' => true,
+        ],
         'customer_id' => [
             'label' => '顧客',
             'type' => 'select',
@@ -26,27 +40,13 @@ return [
                 ],
             ],
         ],
-        'name' => [
-            'label' => '現場名',
-            'type' => 'text',
-            'size' => 50,
-            'search' => [
-                'name' => [
-                    'label' => '現場名',
-                    'type' => 'text',
-                    'compare' => 'like',
-                    'placeholder' => 'あいまい検索',
-                ],
-            ],
-            'required' => true,
-        ],
         'address' => [
-            'label' => '住所',
+            'label' => '現場住所',
             'type' => 'textarea',
             'size' => 'full',
             'search' => [
                 'address' => [
-                    'label' => '住所',
+                    'label' => '現場住所',
                     'type' => 'text',
                     'compare' => 'like',
                     'placeholder' => 'あいまい検索',
@@ -66,6 +66,14 @@ return [
                 ],
             ],
         ],
+        'total_price' => [
+            'type' => false,
+            'label' => '合計金額',
+        ],
+        'order' => [
+            'type' => false,
+            'label' => '発注',
+        ]
     ],
     'index' => [
         '_control',
@@ -76,15 +84,19 @@ return [
         'staff',
     ],
     'search' => [
-        'customer_id',
-        'name',
-        'address',
-        'staff',
+        [
+            'customer_id',
+            'name',
+            'address',
+            'staff',
+        ],
     ],
     'form' => [
         'customer_id',
         'name',
         'address',
         'staff',
+        'total_price',
+        'order',
     ],
 ];

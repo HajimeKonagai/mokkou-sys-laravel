@@ -191,7 +191,7 @@ class GenerateSwaggerYamlService
 
         $default_types = [
             'text',
-            'order',
+            'seq',
             'textarea',
             'select',
             'radio',
@@ -299,7 +299,7 @@ class GenerateSwaggerYamlService
         // boolean integer string array object
         switch ($type)
         {
-        case 'order':
+        case 'seq':
         case 'select':
         case 'number':
         case 'radio':

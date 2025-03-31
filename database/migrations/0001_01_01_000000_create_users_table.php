@@ -21,6 +21,11 @@ return new class extends Migration
             $table->timestamps();
 
             $table->boolean('is_admin')->default(false);
+
+            // 仕入先担当者
+            $table->string('staff')->nullable()->default(null);
+            // 仕入先住所 
+            $table->text('address')->nullable()->default(null);
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

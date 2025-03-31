@@ -9,16 +9,16 @@ use App\Models\User as MainModel;
 
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
-use App\Models\Product;
+use App\Models\Material;
 
 class UserController extends Crud
 {
     protected static function configs()
     {
         $configs = parent::configs();
-        $product_options = Product::get()->toArray();
+        $material_options = Material::get()->toArray();
 
-        $configs['config']['product']['options'] = $product_options;
+        $configs['config']['material']['options'] = $material_options;
 
         return $configs;
     }
@@ -30,10 +30,10 @@ class UserController extends Crud
 
     public static function mainModelWith()
     {
-        return ['product'];
+        return ['material'];
     }
 
-    public function index(Request $request)
+    public function __invoke(Request $request)
     {
         $mainModel = static::mainModel();
         $query = $mainModel::supplier(); // supplier only
@@ -49,44 +49,29 @@ class UserController extends Crud
             );
         }
 
-        return Inertia::render(static::viewDir().'Index', [
-            'config' => static::config(),
-            'indexConfig' => static::indexConfig(),
-            'searchConfig' => static::searchConfig()
+        // create
+        $createConfigs = static::configs();
+        $createConfigs['config']['password']['required'] = true;
+        $createConfigs['config']['password_confirmation']['required'] = true;
+
+        // edit
+        $editConfigs = static::configs();
+        $editConfigs['config']['password']['description'] = 'パスワードの変更時のみ入力してください';
+        $editConfigs['config']['password_confirmation']['description'] = 'パスワードの変更時のみ入力してください';
+
+        return Inertia::render(static::viewDir(), [
+            'configs' => static::configs(),
+            'materialConfigs' => config('blu.material'),
+
+            'createConfigs' => $createConfigs,
+            'editConfigs' => $editConfigs,
         ]);
     }
 
     public function show(Request $request, MainModel $id)
     {
+        $id->load(['pricing']);
         return static::_show($request, $id);
-    }
-
-    public function create(Request $request)
-    {
-        $config = static::config();
-        $config['password']['required'] = true;
-        $config['password_confirmation']['required'] = true;
-        return Inertia::render(static::viewDir().'Create', [
-            'config' => $config,
-            'formConfig' => static::formConfig(),
-            'productConfigs' => config('blu.product'),
-        ]);
-
-    }
-
-    public function edit(Request $request, MainModel $id)
-    {
-        $id->load(static::mainModelWith());
-
-        $config = static::config();
-        $config['password']['description'] = 'パスワードの変更時のみ入力してください';
-        $config['password_confirmation']['description'] = 'パスワードの変更時のみ入力してください';
-        return Inertia::render(static::viewDir().'Edit', [
-            'config' => $config,
-            'item' => $id,
-            'formConfig' => static::formConfig(),
-            'productConfigs' => config('blu.product'),
-        ]);
     }
 
     public function store(Request $request)
@@ -100,12 +85,13 @@ class UserController extends Crud
             // event(new Registered($user = $this->_create($request->all())));
             $item = MainModel::create([
                 'name' => $request->input('name'),
+                'staff' => $request->input('staff'),
+                'address' => $request->input('address'),
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
                 'is_admin' => 0,
-                'product' => $request->input('product'),
             ]);
-            $result = \Blu\Save::save(['product' => $request->input('product')], $item, static::config(), $useDefault = false);
+            $result = \Blu\Save::save(['pricing' => $request->input('pricing')], $item, static::config(), $useDefault = false);
 
             if (!$result) throw new \Exception();
 
@@ -127,7 +113,9 @@ class UserController extends Crud
         }
 
         return redirect()
-            ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
+            ->back()
+            ->with(['createdId' => $item->id,])
+            // ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
             ->with('success', '保存しました。');
     }
 
@@ -141,9 +129,10 @@ class UserController extends Crud
                 $this->validator($request->all(), $id->id)->validate();
                 $id->fill([
                     'name' => $request['name'],
+                    'staff' => $request['staff'],
+                    'address' => $request['address'],
                     'email' => $request['email'],
                     'password' => Hash::make($request['password']),
-                    'product' => $request->input('product'),
                 ]);
                 $id->save();
             }
@@ -152,13 +141,14 @@ class UserController extends Crud
                 $this->validator_no_password($request->all(), $id->id)->validate();
                 $id->fill([
                     'name' => $request['name'],
+                    'staff' => $request['staff'],
+                    'address' => $request['address'],
                     'email' => $request['email'],
-                    'product' => $request->input('product'),
                 ]);
                 $id->save();
             }
 
-            $result = \Blu\Save::save(['product' => $request->input('product')], $id, static::config(), $useDefault = false);
+            $result = \Blu\Save::save(['pricing' => $request->input('pricing')], $id, static::config(), $useDefault = false);
 
             if (!$result) throw new \Exception();
 
@@ -181,7 +171,8 @@ class UserController extends Crud
         }
 
         return redirect()
-            ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
+            ->back()
+            // ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
             ->with('success', '更新しました。');
     }
 
@@ -211,6 +202,7 @@ class UserController extends Crud
         return Validator::make($data, [
             'name' => 'required|string|max:255',
             'email' => 'required|string|email|max:255|unique:users'.($ignoreId ? ',email,'.$ignoreId.',id' : ''),
+            'password' => ['string', 'min:8', 'confirmed'],
         ]);
     }
 }

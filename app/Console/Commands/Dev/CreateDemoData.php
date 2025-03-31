@@ -4,11 +4,13 @@ namespace App\Console\Commands\Dev;
 
 use Illuminate\Console\Command;
 
-use App\Models\Product;
+use App\Models\Material;
 use App\Models\Project;
 use App\Models\User;
+use App\Models\Customer;
 use App\Models\Order;
 use App\Models\OrderDetail;
+use App\Models\Product;
 
 use Illuminate\Support\Facades\Hash;
 
@@ -33,7 +35,7 @@ class CreateDemoData extends Command
      */
     public function handle()
     {
-        Product::truncate();
+        Material::truncate();
         Order::truncate();
         OrderDetail::truncate();
 
@@ -49,9 +51,14 @@ class CreateDemoData extends Command
             ]);
         }
 
-        foreach ($demo_data['product'] as $product)
+        foreach ($demo_data['material'] as $material)
         {
-            \Blu\Save::saveTransaction(collect($product), new Product, config('blu.product.config'), $useDefault = true);
+            \Blu\Save::saveTransaction(collect($material), new Material, config('blu.material.config'), $useDefault = true);
+        }
+
+        foreach ($demo_data['customer'] as $customer)
+        {
+            \Blu\Save::saveTransaction(collect($customer), new Customer, config('blu.customer.config'), $useDefault = true);
         }
 
         foreach ($demo_data['project'] as $project)
@@ -62,6 +69,11 @@ class CreateDemoData extends Command
         foreach ($demo_data['order'] as $order)
         {
             \Blu\Save::saveTransaction(collect($order), new Order, config('blu.order.config'), $useDefault = true);
+        }
+
+        foreach ($demo_data['product'] as $product)
+        {
+            \Blu\Save::saveTransaction(collect($product), new Product, config('blu.product.config'), $useDefault = true);
         }
 
         //

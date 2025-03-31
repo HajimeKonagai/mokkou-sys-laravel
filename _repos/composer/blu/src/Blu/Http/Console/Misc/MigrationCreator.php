@@ -64,7 +64,7 @@ class MigrationCreator extends ParentMigrationCreator
             case 'raw':
                 $column.="{raw}('".$fieldName."')";
                 break;
-            case 'order':
+            case 'seq':
                 $column.="integer('".$fieldName."')->default(0)";
                 break;
             case 'textarea':
@@ -112,7 +112,7 @@ class MigrationCreator extends ParentMigrationCreator
                 break;
             }
 
-            if (!\Arr::get($field, 'required', false) && $type != 'order')
+            if (!\Arr::get($field, 'required', false) && $type != 'seq')
             {
                 $column.="->nullable()->default(null)";
             }

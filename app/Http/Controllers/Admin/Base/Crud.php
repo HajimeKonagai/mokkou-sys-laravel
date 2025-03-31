@@ -122,10 +122,16 @@ abstract class Crud extends Controller
             return back()->withErrors('保存に失敗しました。');
         }
 
-        return back()->with('success', '保存しました。');
+        return back()
+        ->with([
+            'createdId' => $item->id,
+        ])
+        ->with('success', '保存しました。');
+        /*
         return redirect()
             ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
             ->with('success', '保存しました。');
+            */
     }
 
     public static function _update(Request $request, $item)
@@ -149,9 +155,12 @@ abstract class Crud extends Controller
             return back()->withErrors('error', '保存に失敗しました。');
         }
 
+        return back()->with('success', '更新しました。');
+        /*
         return redirect()
             ->route(static::routePrefix().'edit', [ 'id' => $result->id ] )
             ->with('success', '更新しました。');
+            */
     }
 
     public static function _destroy(Request $request, $item)

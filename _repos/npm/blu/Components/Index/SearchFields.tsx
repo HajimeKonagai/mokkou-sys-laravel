@@ -5,7 +5,7 @@ import PreferenceFields from '../../classes/preferenceFields'
 
 type SearchFieldsProps = {
     config: any,
-    searchConfig: any,
+    searchConfig?: any,
     preference: [],
     data: any,
     setData: (a: any) => void,
@@ -15,7 +15,7 @@ type SearchFieldsProps = {
 }
 
 export const useSearchFields = ({
-    searchConfig,
+    searchConfig = {},
     preference,
     data,
     setData,
@@ -129,7 +129,7 @@ const SearchFields = (props: SearchFieldsProps) =>
 {
     const { config, preference, setData } = props
 
-    const searchConfig = []
+    const searchConfig = {}
     Object.keys(config).map((key) => {
         if ('search' in config[key])
         {

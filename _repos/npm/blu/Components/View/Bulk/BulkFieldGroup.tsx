@@ -11,6 +11,8 @@ const BulkFieldGroup = (props) =>
         data,
     } = props
 
+    const fieldConfig = config[fieldKey]
+
     const field = <FieldInput
         fieldKey={fieldKey}
         config={config}
@@ -22,7 +24,7 @@ const BulkFieldGroup = (props) =>
 
     return createElement(
         tag,
-        typeof tag == 'string' ? { className: 'Field' } : {},
+        typeof tag == 'string' ? { className: `Field ${fieldKey} ${fieldConfig.className ?? ''}` } : {},
         <>
             {tag != 'td' && (label)} { /* tag が table かどうかで出し分ける */ }
             {field}

@@ -1,6 +1,6 @@
 import Input from './Field/Input'
 import Textarea from './Field/Textarea'
-import Order from './Field/Order'
+import Seq from './Field/Seq'
 import Radio from './Field/Radio'
 import Select from './Field/Select'
 import Checkbox from './Field/Checkbox'
@@ -102,8 +102,8 @@ const FieldInput = ({
     {
     case 'raw':
         return <Raw {...props} />
-    case 'order':
-        return <Order {...props} />
+    case 'seq':
+        return <Seq {...props} />
     case 'textarea':
         return <Textarea {...props} />
     case 'radio':

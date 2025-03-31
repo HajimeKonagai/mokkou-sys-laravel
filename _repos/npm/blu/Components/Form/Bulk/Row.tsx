@@ -68,7 +68,7 @@ const Row = ({ // Form の単位
                     className: 'control',
                 },
                 <div className='button-group'>
-                    {(Object.keys(config).filter((confKey) => config[confKey].type == 'order').length > 0) && (
+                    {(Object.keys(config).filter((confKey) => config[confKey].type == 'seq').length > 0) && (
                         <span className="button small green sort"><UnfoldMoreIcon className='icon' /></span>
                     )}
                     {removeRow && (

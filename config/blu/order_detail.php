@@ -118,7 +118,7 @@ return [
         'order_deadline_at',
         'code',
         'name',
-        'price',
+        // 'price',
         'quantity',
         'unit',
     ],

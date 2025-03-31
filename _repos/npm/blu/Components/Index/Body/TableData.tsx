@@ -60,7 +60,12 @@ const TableData = (props) =>
 
     return (<>
     {Object.keys(preferenceFields).map((key) => (
-        <td className={`${isString( key ) ? 'th-'+key : ''} ${key in preference ? Array.isArray(preference[key]) ? preference[key].join(' ') : preference[key]: ''}`} key={key}>{preferenceFields[key]}</td>
+        <td
+            className={`${isString( key ) ? 'th-'+key : ''} ${key in preference ? Array.isArray(preference[key]) ? preference[key].join(' ') : preference[key]: ''}`}
+            key={key}
+        >
+            {preferenceFields[key]}
+        </td>
     ))}
     </>)
 }

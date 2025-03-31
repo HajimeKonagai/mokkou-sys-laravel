@@ -21,7 +21,8 @@ const Control = ({ data, deadlines, setDeadlines }) =>
     const { auth } = props
 
     const { data: formData, setData, post, processing } = useForm({
-        delivery_at: '',
+        price: data.price,
+        delivery_at: data.delivery_at,
     })
     const [forceChange, setForceChange ] = useState(false)
 
@@ -43,6 +44,23 @@ const Control = ({ data, deadlines, setDeadlines }) =>
 
     return (<div className='button-group'>
         {(!data.delivery_at || forceChange) && (<>
+
+            <input
+                type="number"
+                value={formData.price}
+                onChange={(e) => {
+                    /*
+                    const newDeedLines = {...deadlines}
+                    newDeedLines[data.id] = e.target.value
+                    setDeadlines(newDeedLines)
+                    */
+
+                    const newFormData = {...formData}
+                    newFormData.price = e.target.value
+                    setData(newFormData)
+                }}
+            />
+
             <input
                 type="date"
                 value={formData.delivery_at}
@@ -66,6 +84,67 @@ const Control = ({ data, deadlines, setDeadlines }) =>
         </>)}
     </div>)
 }
+
+
+const Price = ({ data, deadlines, setDeadlines }) =>
+    {
+        const queryClient = useQueryClient()
+        const { props } = usePage()
+        const { auth } = props
+
+    
+        const { data: formData, setData, post, processing } = useForm({
+            price: data.price,
+            delivery_at: data.delivery_at,
+        })
+        const [forceChange, setForceChange ] = useState(false)
+    
+        const setDeliveryAt = () =>
+        {
+            post(route('supplier.dashboard.store', { orderDetail: data.id} ), {
+                preserveScroll: true,
+                preserveState: true, // 検索の維持,
+                onSuccess: () =>
+                {
+                    queryClient.invalidateQueries()
+                },
+                onError: (e) =>
+                {
+                    toastErrors(e)
+                }
+            })
+        }
+    
+        return (<div className='button-group'>
+            {(!data.delivery_at || forceChange) && (<>
+                <input
+                    type="date"
+                    value={formData.delivery_at}
+                    onChange={(e) => {
+                        /*
+                        const newDeedLines = {...deadlines}
+                        newDeedLines[data.id] = e.target.value
+                        setDeadlines(newDeedLines)
+                        */
+    
+                        const newFormData = {...formData}
+                        newFormData.delivery_at = e.target.value
+                        setData(newFormData)
+                    }}
+                />
+                <button
+                    className='button primary'
+                    disabled={processing}
+                    onClick={setDeliveryAt}
+                >
+                    設定<CheckIcon />
+                </button>
+            </>) || (<>
+                {data.delivery_at}
+            </>)}
+        </div>)
+    }
+
 
 const Dashboard = ({
     auth,
@@ -106,8 +185,8 @@ const Dashboard = ({
                         deadlines,
                         setDeadlines,
                     },
-                    label: <>納期設定</>
-                },
+                    label: <>単価・納期設定</>
+                }
             }}
         />
     </SupplierLayout>)

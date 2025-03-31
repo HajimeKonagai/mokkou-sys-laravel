@@ -17,7 +17,7 @@ return [
     ],
 
 
-    'product' => [
+    'material' => [
         [
             'code' => 'AJK-001-030360',
             'name' => 'アイキメタルTK 1.2x4x8',
@@ -47,9 +47,23 @@ return [
         ],
     ],
 
+    'customer' => [
+        ['name' => '顧客A', 'address' => '顧客A住所'],
+        ['name' => '顧客B', 'address' => '顧客B住所'],
+    ],
     'project' => [
-        [ 'name' => '東京タワー改修工事' ],
-        [ 'name' => 'スカイツリー補強工事' ],
+        [
+            'name' => '東京タワー改修工事',
+            'customer_id' => 1,
+            'address' => '東京タワー改修工事住所',
+            'staff' => '東京タワー担当者',
+        ],
+        [
+            'name' => 'スカイツリー補強工事',
+            'customer_id' => 2,
+            'address' => 'スカイツリー補強工事住所',
+            'staff' => 'スカイツリー担当者',
+        ],
     ],
 
     'order' => [
@@ -60,7 +74,7 @@ return [
             'detail' => [
                 [
                     'seq' => 1,
-                    'product' => ['id' => 1],
+                    'material' => ['id' => 1],
                     'quantity' => 10,
                     'code' => 'AJK-001-030360',
                     'name' => 'アイキメタルTK 1.2x4x8',
@@ -71,7 +85,7 @@ return [
                 ],
                 [
                     'seq' => 2,
-                    'product' => ['id' => 2],
+                    'material' => ['id' => 2],
                     'quantity' => 5,
                     'code' => 'AJK-001-030370',
                     'name' => 'アイキメタルTKJ 1.2x4x8',
@@ -88,7 +102,7 @@ return [
             'detail' => [
                 [
                     'seq' => 1,
-                    'product' => ['id' => 3],
+                    'material' => ['id' => 3],
                     'quantity' => 20,
                     'code' => 'AJK-001-030380',
                     'name' => 'アイキメタルTNY 1.2x4x8',
@@ -98,5 +112,62 @@ return [
                 ],
             ],
         ],
+    ],
+
+
+    'product' => [
+        [
+            'name' => '巾木',
+            'product_material' => [
+                [
+                    'material' =>     [
+                        'id' => 1,
+                        'code' => 'AJK-001-030360',
+                        'name' => 'アイキメタルTK 1.2x4x8',
+                        'unit' => '枚',
+                        'price' => '10000',
+                    ],
+                    'code' => 'AJK-001-030360',
+                    'name' => 'アイキメタルTK 1.2x4x8',
+                    'unit' => '枚',
+                    'price' => '10000',
+
+                ],
+                [
+                    'material' =>     [
+                        'id' => 2,
+                        'code' => 'AJK-001-030370',
+                        'name' => 'アイキメタルTKJ 1.2x4x8',
+                        'unit' => '枚',
+                        'price' => '12000',
+                    ],
+                    'code' => 'AJK-001-030370',
+                    'name' => 'アイキメタルTKJ 1.2x4x8',
+                    'unit' => '枚',
+                    'price' => '12000',
+                ],
+                [
+                    'material' =>     [
+                        'id' => 3,
+                        'code' => 'AJK-001-030380',
+                        'name' => 'アイキメタルTNY 1.2x4x8',
+                        'unit' => '枚',
+                        'price' => '15000',
+                    ],
+                    'code' => 'AJK-001-030380',
+                    'name' => 'アイキメタルTNY 1.2x4x8',
+                    'unit' => '枚',
+                    'price' => '15000',
+                ],
+                [
+                    'material' => null,
+                    'name' => '工賃',
+                    'price' => '12000',
+                ],
+            ]
+        ]
+    ],
+    'estimate' => [
+        
     ]
 ];

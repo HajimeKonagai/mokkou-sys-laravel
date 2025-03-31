@@ -6,6 +6,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class User extends Authenticatable
@@ -20,6 +21,8 @@ class User extends Authenticatable
      */
     protected $fillable = [
         'name',
+        'staff',
+        'address',
         'email',
         'password',
         'is_admin',
@@ -34,6 +37,8 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    protected $appends = ['material_price'];
 
     /**
      * Get the attributes that should be cast.
@@ -53,8 +58,24 @@ class User extends Authenticatable
         $query->where('is_admin', false);
     }
 
-    public function product(): BelongsToMany
+    public function pricing(): HasMany
     {
-        return $this->belongsToMany(Product::class, 'product_user', 'product_id', 'user_id')->withOut('user');
+        return $this->hasMany(Pricing::class);
+    }
+
+    public function material(): BelongsToMany
+    {
+        return $this->belongsToMany(Material::class, Pricing::class, 'user_id', 'material_id')->withOut('user');
+    }
+
+    public function getMaterialPriceAttribute()
+    {
+        if (request()->has('material_id'))
+        {
+            $pricing = $this->pricing()->where('material_id', request()->input('material_id'))->first();
+            if ($pricing) return $pricing->price;
+        }
+
+        return false;
     }
 }

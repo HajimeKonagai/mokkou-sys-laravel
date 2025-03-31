@@ -29,47 +29,54 @@ class OrderController extends Crud
 
     public static function mainModelWith()
     {
-        return ['detail', 'detail.user', 'detail.product'];
+        return ['detail', 'detail.user', 'detail.material'];
     }
 
-    public function index(Request $reqeust)
+    public function __invoke(Request $request)
     {
-        return static::_index($reqeust);
+        $mainModel = static::mainModel();
+        $query = $mainModel::query();
+        $query->with(static::mainModelWith());
+
+        if ($request->expectsJson())
+        {
+            return \Blu\Query::itemsByRequest(
+                $request,
+                static::config(),
+                $query,
+                static::$perPage
+            );
+        }
+        
+        $createConfigs = static::configs();
+        $createConfigs['config']['detail']['hasMany']['tag'] = 'ul';
+        $editConfigs = $createConfigs;
+        $indexConfigs = static::configs();
+        foreach ([
+            'code',
+            'material',
+            'user',
+        ] as $hidden)
+        {
+            $indexConfigs['config']['detail']['hasMany']['config'][$hidden]['type'] = 'hidden';
+        }
+
+        return Inertia::render(static::viewDir(), [
+            'configs' => static::configs(),
+            'projectConfigs' => config('blu.project'),
+            'materialConfigs' => config('blu.material'),
+            'userConfigs' => config('blu.user'),
+
+            'createConfigs' => $createConfigs,
+            'editConfigs' => $editConfigs,
+            'indexConfigs' => $indexConfigs,
+        ]);
+
     }
 
     public function show(Request $request, MainModel $id)
     {
         return static::_show($request, $id);
-    }
-
-    public function create(Request $request)
-    {
-        $config = static::config();
-        $config['detail']['hasMany']['tag'] = 'ul';
-        return Inertia::render(static::viewDir().'Create', [
-            'config' => $config,
-            'formConfig' => static::formConfig(),
-
-            'projectConfigs' => config('blu.project'),
-            'productConfigs' => config('blu.product'),
-            'userConfigs' => config('blu.user'),
-        ]);
-    }
-
-    public function edit(Request $request, MainModel $id)
-    {
-        $id->load(static::mainModelWith());
-        $config = static::config();
-        $config['detail']['hasMany']['tag'] = 'ul';
-        return Inertia::render(static::viewDir().'Edit', [
-            'config' => $config,
-            'formConfig' => static::formConfig(),
-            'item' => $id,
-
-            'projectConfigs' => config('blu.project'),
-            'productConfigs' => config('blu.product'),
-            'userConfigs' => config('blu.user'),
-        ]);
     }
 
     public function store(Request $request)

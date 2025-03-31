@@ -10,9 +10,16 @@ use App\Http\Controllers\SwaggerController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\ProductController;
-use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\EstimateController;
 use App\Http\Controllers\Admin\OrderProcessController;
+
+// master
+use App\Http\Controllers\Admin\MaterialController;
+use App\Http\Controllers\Admin\UserController;
+use App\Http\Controllers\Admin\CustomerController;
+use App\Http\Controllers\Admin\ProductController;
+
+
 
 
 if (! function_exists('page') )
@@ -21,10 +28,11 @@ if (! function_exists('page') )
     {
         if (!$name) $name = $route;
         if (strpos($name, '/')) $name = str_replace('/', '.', $name);
-        Route::get   ($route.'',                $class)->name($name.'.index');
-        Route::post  ($route.'',                [$class, 'store'  ])->name($name.'.store');
-        Route::put   ($route.'/{id}',         [$class, 'update' ])->name($name.'.update');
-        Route::delete($route.'/{id}',         [$class, 'destroy'])->name($name.'.destroy');
+        Route::get   ($route.'', $class)->name($name);
+        Route::get   ($route.'/{id}', [$class, 'show'   ])->name($name.'.show');
+        Route::post  ($route.'',      [$class, 'store'  ])->name($name.'.store');
+        Route::put   ($route.'/{id}', [$class, 'update' ])->name($name.'.update');
+        Route::delete($route.'/{id}', [$class, 'destroy'])->name($name.'.destroy');
     }
 }
 
@@ -52,9 +60,12 @@ if (! function_exists('crudPage') )
 Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function ()
 {
     Route::get('dashboard', DashboardController::class)->name('dashboard');
-    crudPage('project', ProjectController::class);
-    crudPage('order', OrderController::class);
-    crudPage('user', UserController::class);
+    page('project', ProjectController::class);
+    page('order', OrderController::class);
+    page('user', UserController::class);
+    page('material', MaterialController::class);
+    page('estimate', EstimateController::class);
+    page('customer', CustomerController::class);
     page('product', ProductController::class);
 
 

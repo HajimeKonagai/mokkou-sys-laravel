@@ -13,8 +13,6 @@ class Order extends Model
     // protected $with = ['detail', 'detail.user'];
     protected $appends = ['code', 'project_name', 'status_text'];
 
-
-
     /*
     protected $casts = [
         'ordered_at' => 'date:Y-m-d',
@@ -25,12 +23,14 @@ class Order extends Model
 
     public function project() : BelongsTo
     {
-        return $this->belongsTo(Project::class)->withOut('order');
+        return $this->belongsTo(Project::class)->without('order');
     }
 
     public function detail() : HasMany
     {
-        return $this->hasMany(OrderDetail::class)->withOut('order');
+        return $this->hasMany(OrderDetail::class)
+            ->orderBy('seq')
+            ->withOut('order');
     }
 
 

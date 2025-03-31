@@ -35,6 +35,7 @@ class HandleInertiaRequests extends Middleware
                 'user' => $request->user(),
             ],
             'mokkou' => config('mokkou'),
+            'createdId' => $request->session()->get('createdId'),
         ];
     }
 }

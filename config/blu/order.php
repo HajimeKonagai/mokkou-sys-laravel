@@ -108,9 +108,9 @@ return [
                 'config' => [
                     'seq' => [
                         'label' => '',
-                        'type' => 'order',
+                        'type' => 'seq',
                     ],
-                    'product' => [
+                    'material' => [
                         'label' => '材料データ',
                         'type' => 'belongsTo',
                         'IndexReference' => [
@@ -119,10 +119,10 @@ return [
                                 'code' => 'code',
                                 'name' => 'name',
                                 'unit' => 'unit',
-                                'price' => 'price',
+                                'user_price' => 'price',
                             ],
                         ],
-                        'attribute' => 'product_name',
+                        'attribute' => 'material_name',
                         'description' => '「仕入先」の選択によって自動的に絞り込まれます',
                     ],
                     // 材料コード
@@ -160,6 +160,9 @@ return [
                         'type' => 'belongsTo',
                         'IndexReference' => [
                             'preview' => ['name'],
+                            'reference' => [
+                                'material_price' => 'price',
+                            ],
                         ],
                         'attribute' => 'user_name',
                         'description' => '「材料データ」の選択によって自動的に絞り込まれます',
@@ -169,9 +172,17 @@ return [
                         'label' => '納期',
                         'type' => 'raw',
                     ],
-                ]
+                ],
             ],
         ],
+
+        /*
+        'user_set' => [
+            'type' => 'user_set',
+            'label' => '仕入先一括設定',
+        ],
+        */
+
         'created_at' => [
             'label' => '',
             'type' => false,
@@ -230,5 +241,7 @@ return [
         'project',
         'deadline_at',
         'detail',
+        // 'user_set',
     ],
+
 ];

@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('customer_id')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
-            $table->text('addresss')->nullable()->default(null);
+            $table->text('address')->nullable()->default(null);
             $table->string('staff')->nullable()->default(null);
             $table->timestamps();
         });

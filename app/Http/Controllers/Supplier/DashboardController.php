@@ -33,15 +33,20 @@ class DashboardController extends Controller
 
     public function store(Request $request, OrderDetail $orderDetail)
     {
+        if (!is_numeric($request->input('price')))
+        {
+            return back()->withErrors('単価を入力してください');
+        }
         if (!strtotime($request->input('delivery_at')))
         {
-            return back()->with('error', '妥当な日付ではありません');
+            return back()->withErrors('error', '妥当な日付ではありません');
         }
 
+        $orderDetail->price = $request->input('price');
         $orderDetail->delivery_at = date('Y-m-d', strtotime($request->input('delivery_at')));
         $orderDetail->save();
 
 
-        return back()->with('success', '納期を設定しました。');
+        return back()->with('success', '単価・納期を設定しました。');
     }
 }

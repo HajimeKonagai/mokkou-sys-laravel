@@ -242,7 +242,7 @@ class Controller
 		// そのまま値を保存 TODO: config setting
 		$default_types = [
 			'text',
-			'order',
+			'seq',
 			'textarea',
 			'select',
 			'radio',

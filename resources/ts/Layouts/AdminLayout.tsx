@@ -1,7 +1,5 @@
 import { Link, usePage } from "@inertiajs/react";
 
-import 'blu/sass/blu.scss';
-
 // import MenuContainer from 'blu/Laravel/Layout/ContextMenusTop'
 // import MenuContainer from 'blu/Laravel/Layout/ContextMenusSide'
 // import MenuContainer from 'blu/Laravel/Layout/DropdownMenusTop'

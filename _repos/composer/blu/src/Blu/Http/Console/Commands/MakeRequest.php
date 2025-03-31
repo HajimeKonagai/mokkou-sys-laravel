@@ -38,7 +38,7 @@ class MakeRequest extends RequestMakeCommand
             switch ($type)
             {
             case 'raw':
-            case 'order':
+            case 'seq':
                 $validations[] = 'integer';
                 break;
             case 'textarea':
@@ -69,7 +69,7 @@ class MakeRequest extends RequestMakeCommand
             }
 
 
-            if ($type != 'order')
+            if ($type != 'seq')
             {
                 if (\Arr::get($field, 'required', false))
                 {

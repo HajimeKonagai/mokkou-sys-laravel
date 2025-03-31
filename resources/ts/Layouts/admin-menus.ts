@@ -10,8 +10,12 @@ export default {
     },
      */
 
-    '現場' : route('admin.project.index'),
-    '発注' : route('admin.order.index'),
-    '材料データ' :  route('admin.product.index'),
-    '仕入先':  route('admin.user.index'),
+    '現場' : route('admin.project'),
+    '見積り':  route('admin.estimate'),
+    '発注' : route('admin.order'),
+
+    '材料データ' :  route('admin.material'),
+    '仕入先':  route('admin.user'),
+    '顧客':  route('admin.customer'),
+    '品目':  route('admin.product'),
 }

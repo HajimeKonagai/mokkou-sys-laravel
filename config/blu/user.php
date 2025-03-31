@@ -26,6 +26,33 @@ return [
             ],
             'required' => true,
         ],
+        'address' => [
+            'label' => '仕入先住所',
+            'type' => 'textarea',
+            'size' => 'full',
+            'search' => [
+                'address' => [
+                    'label' => '仕入先住所',
+                    'type' => 'text',
+                    'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
+                ],
+            ],
+        ],
+        'staff' => [
+            'label' => '仕入先担当者',
+            'type' => 'text',
+            'size' => 25,
+            'search' => [
+                'staff' => [
+                    'label' => '仕入先担当者',
+                    'type' => 'text',
+                    'compare' => 'like',
+                    'placeholder' => 'あいまい検索',
+                ],
+            ],
+        ],
+
         'email' => [
             'label' => 'メールアドレス',
             'type' => 'email',
@@ -51,25 +78,31 @@ return [
             'size' => 50,
         ],
 
-        'product' => [
+        'material_price' => [
+            'label' => '絞り込み中材料単価',
+            'type' => false,
+        ],
+
+        /*
+        'material' => [
             'label' => '材料データ',
             'type' => 'belongsToMany',
             'search' => [
-                'product_id' => [
+                'material_id' => [
                     'label' => '材料データ ID',
                     'type' => false,
-                    'field' => 'product.id',
+                    'field' => 'material.id',
                 ],
-                'product_code' => [
+                'material_code' => [
                     'label' => '材料データ コード',
                     'type' => 'text',
-                    'field' => 'product.code',
+                    'field' => 'material.code',
                 ],
-                'product_name' => [
+                'material_name' => [
                     'label' => '材料データ 材料データ名',
                     'type' => 'text',
                     'compare' => 'like',
-                    'field' => 'product.name',
+                    'field' => 'material.name',
                     'placeholder' => 'あいまい検索',
                 ],
             ],
@@ -80,22 +113,51 @@ return [
                 'preview' => 'name',
             ]
         ],
+        */
+
+        // 仕入先と金額設定
+        'pricing' => [
+            'label' => '材料データ＆金額設定',
+            'type' => 'hasMany',
+            'hasMany' => [
+                'config' => [
+                    'material' => [
+                        'type' => 'belongsTo',
+                        'attribute' => 'material_name',
+                    ],
+                    'price' => [
+                        'type' => 'text',
+                    ],
+                ],
+            ],
+            'HasManyUnique' => [
+                'unique' => 'material',
+                'attribute' => [
+                    'material_name' => 'name'
+                ],
+            ]
+        ],
+
     ],
     'index' => [
         '_control',
         'id',
         'name',
+        'address',
+        'staff',
         'email',
+        'material_price',
     ],
     'search' => [
-        ['name', 'email'],
-        ['product_code', 'product_name']
+        ['name', 'address', 'staff', 'email'],
+        ['material_code', 'material_name']
     ],
     'form' => [
-        'name',
+        ['name', 'staff'],
+        'address',
         'email',
         'password',
         'password_confirmation',
-        'product',
+        'pricing',
     ],
 ];

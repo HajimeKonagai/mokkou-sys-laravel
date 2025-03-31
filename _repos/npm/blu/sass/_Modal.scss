@@ -12,15 +12,15 @@
         min-width: 600px;
         min-height: 600px;
 
-        header
+        > header
         {
             @apply w-full px-4 py-4 font-bold text-lg shadow-sm leading-none flex items-center justify-between;
         }
-        div.ModalContent
+        > div.ModalContent
         {
             @apply p-4;
         }
-        footer
+        > footer
         {
             @apply w-full px-4 py-4 font-bold text-lg shadow-sm leading-none flex items-center justify-between;
         }

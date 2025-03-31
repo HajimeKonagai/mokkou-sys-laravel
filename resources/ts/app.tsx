@@ -1,3 +1,4 @@
+import 'blu/sass/blu.scss';
 import '../sass/app.scss';
 import './bootstrap';
 

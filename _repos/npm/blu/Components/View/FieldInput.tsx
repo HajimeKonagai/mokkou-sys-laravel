@@ -61,7 +61,7 @@ const FieldInput = ({
     switch (fieldConfig.type)
     {
     case 'raw':
-    case 'order':
+    case 'seq':
     case 'textarea':
         return <Raw {...props} />
     case 'radio':

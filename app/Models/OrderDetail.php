@@ -10,7 +10,7 @@ class OrderDetail extends Model
     protected $guarded = ['id', 'created_at', 'updated_at'];
 
     protected $appends = [
-        'product_name', 'user_name',
+        'material_name', 'user_name',
         'order_code', 'order_deadline_at',
     ];
 
@@ -19,9 +19,9 @@ class OrderDetail extends Model
         return $this->belongsTo(Order::class)->withOut('detail');
     }
 
-    public function product() : BelongsTo
+    public function material() : BelongsTo
     {
-        return $this->belongsTo(Product::class)->withOut(['detail', 'order_detail']);
+        return $this->belongsTo(Material::class)->withOut(['detail', 'order_detail']);
     }
 
     public function user() : BelongsTo
@@ -30,9 +30,9 @@ class OrderDetail extends Model
     }
 
 
-    public function getProductNameAttribute()
+    public function getMaterialNameAttribute()
     {
-        return $this->product ? $this->product->name : '';
+        return $this->material ? $this->material->name : '';
     }
 
     public function getUserNameAttribute()

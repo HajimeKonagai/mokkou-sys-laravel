@@ -5,23 +5,17 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Admin\Base\Crud;
 use App\Models\Product as MainModel;
-use App\Models\Product;
 use Inertia\Inertia;
+use App\Models\Project;
 
-use App\Models\User;
 
 class ProductController extends Crud
 {
     protected static function configs()
     {
         $configs = parent::configs();
-        $user_options = User::supplier()->get()->toArray();
-
-        $configs['config']['user']['options'] = $user_options;
-
         return $configs;
     }
-
 
     public static function mainModel()
     {
@@ -30,7 +24,7 @@ class ProductController extends Crud
 
     public static function mainModelWith()
     {
-        return ['user'];
+        return [];
     }
 
     public function __invoke(Request $request)
@@ -48,12 +42,19 @@ class ProductController extends Crud
                 static::$perPage
             );
         }
+        
+        // $config['detail']['hasMany']['tag'] = 'ul';
 
         return Inertia::render(static::viewDir(), [
             'configs' => static::configs(),
-            'userConfigs' => config('blu.user'),
+            'materialConfigs' => config('blu.material'),
         ]);
 
+    }
+
+    public function show(Request $request, MainModel $id)
+    {
+        return static::_show($request, $id);
     }
 
     public function store(Request $request)
