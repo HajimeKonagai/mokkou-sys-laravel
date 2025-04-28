@@ -14,7 +14,14 @@ return new class extends Migration
         Schema::create('customers', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable()->default(null);
+            $table->string('zip')->nullable()->default(null);
             $table->text('address')->nullable()->default(null);
+            $table->string('tel')->nullable()->default(null);
+            $table->string('fax')->nullable()->default(null);
+            $table->string('url')->nullable()->default(null);
+            $table->string('close_date')->nullable()->default(null);
+            $table->string('pay_date')->nullable()->default(null);
+            $table->string('pay_way')->nullable()->default(null);
             $table->timestamps();
         });
     }

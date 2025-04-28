@@ -1,0 +1,258 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.admin-estimate
+{
+
+
+    &.index
+    {
+    
+        td.estimate_product
+        {
+            li.Row
+            {
+                @apply mb-4;
+            }
+            li > .FieldGroup
+            {
+                @apply flex items-center flex-wrap;
+                > .Field
+                {
+                    > .FieldLabel
+                    {
+                        @apply bg-slate-500 rounded p-1 text-white font-bold mr-2 mb-2;
+                    }
+
+                    &:not(.product_material)
+                    {
+                        @apply flex flex-row items-center mr-8;
+
+                    }
+
+                
+                    &.product_material 
+                    {
+                        @apply w-full my-2;
+                        > .FieldLabel
+                        {
+                            @apply inline-block mb-2;
+                        }
+                        .Bulk
+                        {
+                            table
+                            {
+                                @apply w-full;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+
+
+    &.show
+    {
+        .OrderProcessControl
+        {
+            @apply flex flex-row-reverse items-center mr-12;
+            > *
+            {
+                @apply ml-4;
+            }
+            .ordered_at { @apply hidden; }
+        }
+    }
+
+
+
+    &.create,
+    &.edit
+    {
+        .Form.Fields
+        {
+
+            .Field.estimate_product 
+            {
+                @apply relative pr-2 text-sm;
+                li.Row
+                {
+                    @apply relative pl-20 pr-2 text-sm;
+                    > .FieldGroup
+                    {
+                        > .Field
+                        {
+                            input,
+                            select
+                            {
+                                @apply text-sm p-1;
+                            }
+                        }
+                        > .Field.product 
+                        {
+                            @apply w-full border rounded bg-slate-100 p-4 mb-2 text-sm;
+                            .button-group > .button,
+                            input,
+                            div.Preview
+                            {
+                                @apply text-sm px-2 py-1;
+                            }
+                        }
+                        > .Field.seq
+                        {
+                            @apply absolute left-0 top-0 my-auto h-1/2 bg-gray-100 w-16;
+                            .FieldLabel
+                            {
+                                @apply hidden;
+                            }
+                            input[readonly]
+                            {
+                                @apply border-none bg-gray-200 w-10;
+                                height: 100%;
+                                padding: 0;
+                            }
+                        }
+                    }
+
+                    > .control
+                    {
+                        @apply absolute left-0 bottom-0 my-auto h-1/2 w-16;
+                        .FieldLabel
+                        {
+                            @apply hidden;
+                        }
+                        input[readonly]
+                        {
+                            @apply border-none bg-gray-200 w-14;
+                            height: 100%;
+                            padding: 0;
+                        }
+                        div.button-group
+                        {
+                            @apply flex flex-col;
+                            .button
+                            {
+                                @apply rounded-none mr-0 whitespace-nowrap;
+                                &:first-child { @apply rounded-t-lg; }
+                                &:last-child { @apply rounded-b-lg; }
+                            }
+                        }
+                    }
+                }
+
+
+                .Field.product_material
+                {
+                    div.Bulk
+                    {
+                        @apply relative pr-2 text-sm;
+                        .Field
+                        {
+                            input,
+                            select
+                            {
+                                @apply text-sm p-1;
+                            }
+                            .OptionError
+                            {
+                                display: none;
+                            }
+
+                            &.quantity input
+                            {
+                                width: 4em;
+                            }
+
+
+                        }
+                        .Field.material
+                        {
+                            .button-group > .button,
+                            input,
+                            div.Preview
+                            {
+                                @apply text-xs px-2 py-1;
+                            }
+                        }
+                    }
+                }
+
+            }
+
+            /*
+            .HasMany
+            {
+                li.Row .FieldGroup
+                {
+                    @apply relative pl-16 pr-2 text-sm;
+                }
+
+
+                .Field
+                {
+                    input
+                    {
+                        @apply border-slate-200;
+                    }
+                }
+
+                .Field.seq
+                {
+                    @apply absolute left-0 top-0 bottom-0 my-auto h-full;
+                    .FieldLabel
+                    {
+                        @apply hidden;
+                    }
+                    input[readonly]
+                    {
+                        @apply border-none bg-gray-200 w-12;
+                        height: 100%;
+                        padding: 0;
+                    }
+                }
+                .Field.material
+                {
+                    border-style: solid;
+                    @apply w-full border-b;
+                }
+                .Field.unit
+                {
+                    input
+                    {
+                        @apply w-24;
+                    }
+                }
+                .Field.price
+                {
+                    input
+                    {
+                        @apply w-24;
+                    }
+                }
+                .Field.quantity
+                {
+                    input
+                    {
+                        @apply border-slate-800 w-36;
+                    }
+                }
+                .Field.user
+                {
+                    border-style: solid;
+                    @apply border-t;
+                    width: 40em;
+                }
+                .Field.delivery_at
+                {
+                    border-style: solid;
+                    @apply border-t;
+                    width: calc(100% - 40em);
+                }
+            }
+                */
+        }
+    }
+}

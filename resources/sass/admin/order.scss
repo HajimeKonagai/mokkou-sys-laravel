@@ -1,0 +1,119 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.admin-order
+{
+    &.index
+    {
+        td.detail
+        {
+            @apply text-sm;
+            table
+            {
+                th
+                {
+                    font-size: 10px;
+                    line-height: 1.2em;
+                    min-width: 3em;
+                    @apply bg-slate-100;
+                }
+                th, td
+                {
+                    @apply p-1;
+                }
+            }
+        }
+    }
+    &.show
+    {
+        .OrderProcessControl
+        {
+            @apply flex flex-row-reverse items-center mr-12;
+            > *
+            {
+                @apply ml-4;
+            }
+            .ordered_at { @apply hidden; }
+        }
+    }
+    &.create,
+    &.edit
+    {
+        .Form.Fields
+        {
+            .HasMany
+            {
+                li.Row
+                {
+                    >.FieldGroup
+                    {
+                        @apply relative pl-16 pr-2 text-sm;
+                        > .Field
+                        {
+                            input
+                            {
+                                @apply border-slate-200;
+                            }
+                        }
+
+                        > .Field.seq
+                        {
+                            @apply absolute left-0 top-0 bottom-0 my-auto h-full;
+                            .FieldLabel
+                            {
+                                @apply hidden;
+                            }
+                            input[readonly]
+                            {
+                                @apply border-none bg-gray-200 w-12;
+                                height: 100%;
+                                padding: 0;
+                            }
+                        }
+                        > .Field.material
+                        {
+                            border-style: solid;
+                            @apply w-full border-b;
+                        }
+                        > .Field.unit
+                        {
+                            input
+                            {
+                                @apply w-24;
+                            }
+                        }
+                        > .Field.price
+                        {
+                            input
+                            {
+                                @apply w-24;
+                            }
+                        }
+                        > .Field.quantity
+                        {
+                            input
+                            {
+                                @apply border-slate-800 w-36;
+                            }
+                        }
+                        > .Field.user
+                        {
+                            border-style: solid;
+                            @apply border-t;
+                            width: 40em;
+                        }
+                        > .Field.delivery_at
+                        {
+                            border-style: solid;
+                            @apply border-t;
+                            width: calc(100% - 40em);
+                        }
+
+            
+                    }
+                }
+            }
+        }
+    }
+}

@@ -157,7 +157,7 @@ const OrderProcessControl = ({
 }
 
 
-const User = ({
+const Order = ({
     configs,
     projectConfigs,
     materialConfigs,
@@ -202,4 +202,4 @@ const User = ({
     </Layout>)
 }
 
-export default User
+export default Order

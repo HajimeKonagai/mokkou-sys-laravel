@@ -109,9 +109,13 @@ const formCustomCallbacks = ({
     }
 }
 
-const Material = ({
+const Product = ({
     configs,
-    materialConfigs
+    materialConfigs,
+
+    indexConfigs,
+    createConfigs,
+    editConfigs,
 }) =>
 {
     const {
@@ -123,8 +127,6 @@ const Material = ({
         materialConfigs
     })
 
-    console.log()
-
     return (<Layout
         title={`${TITLE} - ${TITLE_INDEX}`}
         className={`${CLASS_NAME} index`}
@@ -134,8 +136,12 @@ const Material = ({
             constants={productConstants}
             createCallbacks={formCallbacks}
             editCallbacks={formCallbacks}
+
+            indexConfigs={indexConfigs}
+            createConfigs={createConfigs}
+            editConfigs={editConfigs}
         />
     </Layout>)
 }
 
-export default Material
+export default Product

@@ -11,9 +11,11 @@ export default {
      */
 
 
+    /*
     '発注' : {
         '発注一覧': route('admin.order.index'),
         '新規発注作成': route('admin.order.create'),
         0: route('admin.order.edit', {id: '*'}),
     },
+    */
 }

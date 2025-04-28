@@ -43,11 +43,18 @@ class ProductController extends Crud
             );
         }
         
-        // $config['detail']['hasMany']['tag'] = 'ul';
+        $createConfigs = static::configs();
+        $createConfigs['config']['product_material']['hasMany']['tag'] = 'ul';
+        $editConfigs = $createConfigs;
+        $indexConfigs = static::configs();
 
         return Inertia::render(static::viewDir(), [
             'configs' => static::configs(),
             'materialConfigs' => config('blu.material'),
+
+            'createConfigs' => $createConfigs,
+            'editConfigs' => $editConfigs,
+            'indexConfigs' => $indexConfigs,
         ]);
 
     }

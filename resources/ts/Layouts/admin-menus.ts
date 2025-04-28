@@ -10,12 +10,15 @@ export default {
     },
      */
 
-    '現場' : route('admin.project'),
     '見積り':  route('admin.estimate'),
+    '見積り品目':  route('admin.product'),
     '発注' : route('admin.order'),
 
+    '顧客':  route('admin.customer'),
+    '現場' : route('admin.project'),
     '材料データ' :  route('admin.material'),
     '仕入先':  route('admin.user'),
-    '顧客':  route('admin.customer'),
-    '品目':  route('admin.product'),
+    'csv':  {
+        'csv- 現場': route('admin.user')
+    },
 }

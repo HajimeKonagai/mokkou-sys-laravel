@@ -17,6 +17,7 @@ export default defineConfig({
         alias: {
             '@': '/resources/ts',
             'blu': '/_repos/npm/blu',
+            'blu-csv': '/_repos/npm/blu-csv',
         },
     },
     css: {

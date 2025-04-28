@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.admin-product
+{
+
+
+    &.create,
+    &.edit
+    {
+        .Form.Fields
+        {
+            .Field.product_material
+            {
+                @apply relative pr-2 text-sm;
+                li.Row
+                {
+                    @apply relative pl-28 pr-2 text-sm min-h-24;
+                    > .FieldGroup
+                    {
+                        > .Field
+                        {
+                            input,
+                            select,
+                            span.Raw
+                            {
+                                @apply text-sm p-1;
+                                min-height: auto;
+                                min-width: auto;
+                            }
+                        }
+                        > .Field.material 
+                        {
+                            @apply bg-slate-100 rounded py-1 my-1;
+                            .button-group > .button,
+                            input,
+                            div.Preview
+                            {
+                                @apply text-sm px-2 py-1;
+                                
+                            }
+                        }
+                        > .Field.price
+                        {
+                            input
+                            {
+                                @apply w-24;
+                            }
+                        }
+                        > .Field.quantity
+                        {
+                            input
+                            {
+                                @apply w-16;
+                            }
+                        }
+                        > .Field.total
+                        {
+                            span.Raw
+                            {
+                                @apply w-24;
+                            }
+                        }
+                        > .Field.seq
+                        {
+                            @apply absolute left-0 top-0 my-auto h-1/2 bg-gray-100 w-24 p-1;
+                            .FieldLabel
+                            {
+                                @apply hidden;
+                            }
+                            input[readonly]
+                            {
+                                @apply border-none bg-gray-200 w-10;
+                                height: 100%;
+                                padding: 0;
+                            }
+                        }
+                    }
+
+                    > .control
+                    {
+                        @apply absolute left-0 bottom-0 my-auto h-1/2 w-24 p-1;
+                        .FieldLabel
+                        {
+                            @apply hidden;
+                        }
+                        input[readonly]
+                        {
+                            @apply border-none bg-gray-200 w-14;
+                            height: 100%;
+                            padding: 0;
+                        }
+                        div.button-group
+                        {
+                            @apply flex;
+                            /*
+                            .button
+                            {
+                                @apply rounded-none mr-0 whitespace-nowrap;
+                                &:first-child { @apply rounded-t-lg; }
+                                &:last-child { @apply rounded-b-lg; }
+                            }
+                            */
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

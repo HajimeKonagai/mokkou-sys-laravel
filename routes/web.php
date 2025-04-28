@@ -72,6 +72,10 @@ Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' =
     Route::post('order_process/order/{order}', [OrderProcessController::class, 'order'])->name('order_process.order');
     Route::post('order_process/cancel/{order}', [OrderProcessController::class, 'cancel'])->name('order_process.cancel');
     Route::post('order_process/delivered/{order}', [OrderProcessController::class, 'delivered'])->name('order_process.delivered');
+
+    // csv
+    Route::get('csv/customer/{uniqid?}', App\Http\Controllers\Admin\Csv\CustomerController::class)->name('csv.customer');
+    Route::post('csv/customer/{uniqid?}', [App\Http\Controllers\Admin\Csv\CustomerController::class, 'store'])->name('csv.customer.store');
 });
 
 
@@ -79,13 +83,13 @@ Route::group(['middleware' => ['auth'], 'prefix' => 'supplier', 'as' => 'supplie
 {
     Route::get('dashboard', \App\Http\Controllers\Supplier\DashboardController::class)->name('dashboard');
     Route::post('dashboard/{orderDetail}', [\App\Http\Controllers\Supplier\DashboardController::class, 'store'])->name('dashboard.store');
+
+
+    Route::get('product', \App\Http\Controllers\Supplier\ProductController::class)->name('product');
+    Route::post('product', [\App\Http\Controllers\Supplier\ProductController::class, 'store'])->name('product.store');
+    Route::post('update/{item}', [\App\Http\Controllers\Supplier\ProductController::class, 'update'])->name('product.update');
+    Route::post('delete/{item}', [\App\Http\Controllers\Supplier\ProductController::class, 'destroy'])->name('product.destroy');
 });
-
-
-
-
-
-
 
 
 Route::get('/', function () {

@@ -39,6 +39,9 @@ const SupplierLayout = ({
             </>}
         className={className}
         width={300}
+        menus={<MenuContainer
+            menus={menus}
+        />}
     >
         {children}
     </BaseLayout>)

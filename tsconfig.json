@@ -15,7 +15,8 @@
         "paths": {
             "@/*": ["./resources/ts/*"],
             "ziggy-js": ["./vendor/tightenco/ziggy"],
-            "blu/*": ["_repos/npm/blu/*"]
+            "blu/*": ["_repos/npm/blu/*"],
+            "blu-csv/*": ["_repos/npm/blu-csv/*"]
         }
     },
     "include": [

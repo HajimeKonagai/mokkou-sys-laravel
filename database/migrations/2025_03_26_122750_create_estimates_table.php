@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('estimates', function (Blueprint $table) {
             $table->id();
 
+            $table->unsignedBigInteger('project_id')->nullable()->default(null);
+
             $table->string('name')->nullable()->default(null);
             $table->date('estimated_at')->nullable()->default(null);
 

@@ -70,6 +70,10 @@ return [
                         ],
                         'attribute' => 'material_name',
                     ],
+                    'seq' => [
+                        'label' => '順序',
+                        'type' => 'seq',
+                    ],
                     'name' => [
                         'label' => '名称',
                         'type' => 'text',
