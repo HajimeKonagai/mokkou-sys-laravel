@@ -76,4 +76,12 @@ class ProjectController extends Crud
     {
         return static::_destroy($request, $id);
     }
+
+    public function to_task(Request $request, MainModel $project)
+    {
+        $request->session()->put('project_id', $project->id);
+        
+        return redirect()
+            ->route('admin.task');
+    }
 }

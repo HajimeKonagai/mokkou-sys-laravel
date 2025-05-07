@@ -72,7 +72,6 @@ class ProductController extends Crud
     public function update(Request $request, MainModel $id)
     {
         return static::_update($request, $id);
-        
     }
 
     public function destroy(Request $request, MainModel $id)

@@ -7,7 +7,14 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Project extends Model
 {
-    protected $appends = [];
+    protected $appends = ['total_price'];
+
+    public function task() : HasMany
+    {
+        return $this->hasMany(Task::class)
+            ->orderBy('seq')
+            ->withOut('project');
+    }
 
     public function order(): HasMany
     {
@@ -16,16 +23,13 @@ class Project extends Model
 
     public function getTotalPriceAttribute()
     {
-        $orders = $this->order()->without(['order'])->get();
+        $tasks = $this->task()->without(['order'])->get();
         $total = 0;
-        foreach ($orders as $order)
+        foreach ($tasks as $task)
         {
-            foreach ($order->detail as $detail)
-            {
-                $price = is_numeric($detail->price) ? $detail->price: 0;
-                $quantity = is_numeric($detail->quantity) ? $detail->quantity: 0;
-                $total += $price * $quantity;
-            }
+            $price = is_numeric($task->price) ? $task->price: 0;
+            $quantity = is_numeric($task->quantity) ? $task->quantity: 0;
+            $total += $price * $quantity;
         }
 
         return $total;

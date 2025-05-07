@@ -120,6 +120,7 @@ return [
             'name' => '巾木',
             'product_material' => [
                 [
+                    'seq' => 1,
                     'material' =>     [
                         'id' => 1,
                         'code' => 'AJK-001-030360',
@@ -129,11 +130,13 @@ return [
                     ],
                     'code' => 'AJK-001-030360',
                     'name' => 'アイキメタルTK 1.2x4x8',
+                    'quantity' => 1,
                     'unit' => '枚',
                     'price' => '10000',
 
                 ],
                 [
+                    'seq' => 2,
                     'material' =>     [
                         'id' => 2,
                         'code' => 'AJK-001-030370',
@@ -143,10 +146,12 @@ return [
                     ],
                     'code' => 'AJK-001-030370',
                     'name' => 'アイキメタルTKJ 1.2x4x8',
+                    'quantity' => 2,
                     'unit' => '枚',
                     'price' => '12000',
                 ],
                 [
+                    'seq' => 3,
                     'material' =>     [
                         'id' => 3,
                         'code' => 'AJK-001-030380',
@@ -156,13 +161,16 @@ return [
                     ],
                     'code' => 'AJK-001-030380',
                     'name' => 'アイキメタルTNY 1.2x4x8',
+                    'quantity' => 3,
                     'unit' => '枚',
                     'price' => '15000',
                 ],
                 [
+                    'seq' => 4,
                     'material' => null,
                     'name' => '工賃',
                     'price' => '12000',
+                    'quantity' => 1,
                 ],
             ]
         ]

@@ -11,13 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estimate_product_materials', function (Blueprint $table) {
+        Schema::create('task_materials', function (Blueprint $table) {
             $table->id();
 
-            $table->unsignedBigInteger('estimate_product_id')->nullable()->default(null);
+            $table->unsignedBigInteger('task_id')->nullable()->default(null);
+            $table->unsignedBigInteger('material_id')->nullable()->default(null);
 
             $table->integer('seq')->default(0);
-            $table->unsignedBigInteger('material_id')->nullable()->default(null);
             $table->string('code')->nullable()->default(null);
             $table->string('name')->nullable()->default(null);
             $table->string('quantity')->nullable()->default(null);
@@ -34,6 +34,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estimate_product_materials');
+        Schema::dropIfExists('task_materials');
     }
 };

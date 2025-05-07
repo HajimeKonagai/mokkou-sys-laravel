@@ -10,15 +10,38 @@ export default {
     },
      */
 
-    '見積り':  route('admin.estimate'),
-    '見積り品目':  route('admin.product'),
-    '発注' : route('admin.order'),
 
-    '顧客':  route('admin.customer'),
-    '現場' : route('admin.project'),
-    '材料データ' :  route('admin.material'),
-    '仕入先':  route('admin.user'),
+
     'csv':  {
         'csv- 現場': route('admin.user')
     },
+}
+
+const master_menu = {
+    'マスタデータ' : {
+        '顧客':  route('admin.customer'),
+        '見積り品目':  route('admin.product'),
+        '材料データ' :  route('admin.material'),
+        '仕入先':  route('admin.user'),
+    }
+}
+
+const project_menu = {
+    'プロジェクト': {
+        '現場一覧' : route('admin.project'),
+        '見積り':  route('admin.task'),
+        '発注' : route('admin.order'),
+    }
+}
+
+const csv_menu = {
+    'csv':  {
+        'csv- 現場': route('admin.user')
+    },
+}
+
+export {
+    master_menu,
+    project_menu,
+    csv_menu,
 }

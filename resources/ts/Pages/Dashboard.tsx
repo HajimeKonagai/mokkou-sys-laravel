@@ -1,9 +1,12 @@
-import Layout from '@/Layouts/AdminLayout';
+import AdminLayout from '@/Layouts/AdminLayout';
 import { Head } from '@inertiajs/react';
 
 export default function Dashboard() {
     return (
-        <Layout>
+        <AdminLayout
+            title={`プロジェクト`}
+            className={`dashboard`}
+        >
             <Head title="Dashboard" />
 
             <div className="py-12">
@@ -15,6 +18,6 @@ export default function Dashboard() {
                     </div>
                 </div>
             </div>
-        </Layout>
+        </AdminLayout>
     );
 }

@@ -17,6 +17,8 @@ return new class extends Migration
             $table->unsignedBigInteger('product_id')->nullable()->default(null);
             $table->unsignedBigInteger('material_id')->nullable()->default(null);
 
+            $table->integer('seq')->nullable()->default(0);
+
             $table->string('name')->nullable()->default(null);
             $table->integer('price')->nullable()->default(null);
             $table->integer('quantity')->nullable()->default(null);

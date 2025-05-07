@@ -17,6 +17,12 @@ return new class extends Migration
             $table->string('name')->nullable()->default(null);
             $table->text('address')->nullable()->default(null);
             $table->string('staff')->nullable()->default(null);
+
+            $table->string('deadline')->nullable()->default(null);
+            $table->string('condition')->nullable()->default(null);
+            $table->string('location')->nullable()->default(null);
+            $table->string('expiration')->nullable()->default(null);
+
             $table->timestamps();
         });
     }

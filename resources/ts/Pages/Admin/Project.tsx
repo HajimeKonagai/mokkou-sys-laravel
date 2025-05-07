@@ -7,6 +7,14 @@ import Page from "@/Components/Page"
 import Layout from '@/Layouts/AdminLayout'
 import Table from "blu/Components/Index/Table"
 import Pagination from "blu/Laravel/Pagination"
+import EditModal from "@/Components/PageComponents/Edit"
+import CreateModal from "@/Components/PageComponents/Create"
+import ShowModal from "@/Components/PageComponents/Show"
+import DeleteButton from "@/Components/PageComponents/Delete"
+import ShowIcon from '@mui/icons-material/Visibility';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import ListIcon from '@mui/icons-material/List';
+import { Link } from "@inertiajs/react"
 
 declare var route
 
@@ -49,13 +57,38 @@ const viewCustomCallbacks = ({
     }
 }
 
+const Control = ({
+    data,
+    constants,
+}) => {
+
+    return (<div className='button-group'>
+        {/*
+        <Link
+            className="button small blue outline"
+            href={route('admin.session.put_project', {project: data.id})}
+            method={`put`}
+        ><CheckCircleOutlineIcon />選択</Link>
+        */}
+        <Link
+            className="button small edit"
+            href={route('admin.project.to_task', { project: data.id })}
+            method={`put`}
+        ><ListIcon />詳細・編集</Link>
+        <DeleteButton
+            item={data}
+            constants={constants}
+        />
+    </div>)
+}
+
 const Project = ({
     configs,
     orderConfigs
 }) =>
 {
     const {
-        TITLE, TITLE_INDEX, CLASS_NAME
+        TITLE, TITLE_INDEX, CLASS_NAME, CONTROL_NAME
     } = projectConstants
 
 
@@ -66,6 +99,20 @@ const Project = ({
         orderConfigs
     })
 
+
+    const customCells = {
+        '_control': {
+            type: Control,
+            props: {
+                editConfigs: configs,
+                constants: projectConstants,
+                editCallbacks: formCallbacks,
+                showCallbacks: viewCallbacks,
+            },
+            label: CONTROL_NAME
+        },
+    }
+
     return (<Layout
         title={`${TITLE} - ${TITLE_INDEX}`}
         className={`${CLASS_NAME} index`}
@@ -74,6 +121,7 @@ const Project = ({
             configs={configs}
             constants={projectConstants}
             showCallbacks={viewCallbacks}
+            customCells={customCells}
         />
     </Layout>)
 }

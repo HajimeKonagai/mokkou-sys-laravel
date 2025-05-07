@@ -9,13 +9,10 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import {
     TITLE,
     FORM_PREFERENCE_KEY,
-    EDIT_ROUTE,
     DELETE_ROUTE,
     DELETE_MESSAGE,
     CLASS_NAME,
     TITLE_SHOW,
-    CONTROL_EDIT_LABEL,
-    CONTROL_DELETE_LABEL,
 } from './constants'
 import customCallbacks from './View/customCallbacks'
 import DeleteButton from '@/Components/PageComponents/Delete';

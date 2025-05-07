@@ -2,14 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
-.admin-estimate
+.admin-task
 {
-
-
     &.index
     {
     
-        td.estimate_product
+        td.task_material
         {
             li.Row
             {
@@ -72,10 +70,11 @@
     &.create,
     &.edit
     {
+        background-color: red;
         .Form.Fields
         {
 
-            .Field.estimate_product 
+            .Field.task_material 
             {
                 @apply relative pr-2 text-sm;
                 li.Row

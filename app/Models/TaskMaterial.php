@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class EstimateProductMaterial extends Model
+class TaskMaterial extends Model
 {
     //
 
@@ -15,7 +15,7 @@ class EstimateProductMaterial extends Model
 
     public function material() : BelongsTo
     {
-        return $this->belongsTo(Material::class)->withOut('estimate_product_material');
+        return $this->belongsTo(Material::class)->withOut('task_material');
     }
 
     public function getMaterialNameAttribute()

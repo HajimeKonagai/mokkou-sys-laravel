@@ -91,10 +91,10 @@ const customerConstants = constants({
 })
 
 
-const estimateConstants = constants({
+const taskConstants = constants({
     title: '見積り',
-    route_prefix: 'admin.estimate',
-    api_route_prefix: 'admin.estimate',
+    route_prefix: 'admin.task',
+    api_route_prefix: 'admin.task',
 })
 
 const productConstants = constants({
@@ -112,7 +112,7 @@ export {
     orderConstants,
     materialConstants,
     userConstants,
-    estimateConstants,
+    taskConstants,
     customerConstants,
     productConstants,
 }

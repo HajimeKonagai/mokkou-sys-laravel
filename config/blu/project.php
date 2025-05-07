@@ -69,11 +69,44 @@ return [
         'total_price' => [
             'type' => false,
             'label' => '合計金額',
+            'attribute' => 'total_price'
         ],
         'order' => [
             'type' => false,
             'label' => '発注',
-        ]
+        ],
+
+        'estimated_at' => [
+            'label' => '見積り日',
+            'type' => 'date',
+            'sort' => true,
+            'size' => 50,
+        ],
+        'deadline' => [
+            'label' => '納期',
+            'type' => 'text',
+            'sort' => true,
+            'size' => 50,
+        ],
+        'condition' => [
+            'label' => '取引条件',
+            'type' => 'text',
+            'sort' => true,
+            'size' => 50,
+        ],
+        'location' => [
+            'label' => '受渡場所',
+            'type' => 'text',
+            'sort' => true,
+            'size' => 50,
+        ],
+        'expiration' => [
+            'label' => '見積り有効期限',
+            'type' => 'text',
+            'sort' => true,
+            'size' => 50,
+        ],
+
     ],
     'index' => [
         '_control',
@@ -92,11 +125,17 @@ return [
         ],
     ],
     'form' => [
-        'customer_id',
-        'name',
+        [
+            'customer_id', 'name',
+            'staff',
+        ],
         'address',
-        'staff',
+        [
+            'deadline',
+            'condition',
+            'location',
+            'expiration',
+        ],
         'total_price',
-        'order',
     ],
 ];

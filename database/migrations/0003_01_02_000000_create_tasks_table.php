@@ -11,17 +11,27 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('estimate_products', function (Blueprint $table) {
+        Schema::create('tasks', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('estimate_id')->nullable()->default(null);
 
-            $table->integer('seq')->default(0);
+            $table->unsignedBigInteger('project_id')->nullable()->default(null);
             $table->unsignedBigInteger('product_id')->nullable()->default(null);
+
+            $table->integer('seq')->nullable()->default(0);
+
             $table->string('name')->nullable()->default(null);
+            $table->integer('material_cost')->nullable()->default(null);
+            $table->integer('process_cost')->nullable()->default(null);
+            $table->integer('attach_cost')->nullable()->default(null);
+            $table->integer('cost_total')->nullable()->default(null);
+            $table->float('rate')->nullable()->default(1.0);
+            $table->float('raw_price')->nullable()->default(null);
             $table->integer('price')->nullable()->default(null);
+
             $table->integer('quantity')->nullable()->default(null);
-            $table->string('unit')->nullable()->default(null);
+            $table->text('unit')->nullable()->default(null);
             $table->integer('total')->nullable()->default(null);
+
 
             $table->timestamps();
         });
@@ -32,6 +42,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('estimate_products');
+        Schema::dropIfExists('tasks');
     }
 };

@@ -210,3 +210,7 @@ const Page = ({
 
 }
 export default Page
+
+export {
+    Control
+}

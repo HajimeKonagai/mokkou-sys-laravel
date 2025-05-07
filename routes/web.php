@@ -7,10 +7,11 @@ use Inertia\Inertia;
 
 use App\Http\Controllers\SwaggerController;
 
+use App\Http\Controllers\Admin\SessionController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\ProjectController;
+use App\Http\Controllers\Admin\TaskController;
 use App\Http\Controllers\Admin\OrderController;
-use App\Http\Controllers\Admin\EstimateController;
 use App\Http\Controllers\Admin\OrderProcessController;
 
 // master
@@ -59,12 +60,29 @@ if (! function_exists('crudPage') )
  */
 Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' => 'admin.'], function ()
 {
-    Route::get('dashboard', DashboardController::class)->name('dashboard');
+    Route::put('session/{project}', [SessionController::class, 'put_project'])->name('session.put_project');
+    Route::delete('session', [SessionController::class, 'delete_project'])->name('session.delete_project');
+
+    Route::get('/', DashboardController::class)->name('dashboard');
     page('project', ProjectController::class);
+    Route::put('project/{project}/to_task',  [ProjectController::class, 'to_task' ])->name('project.to_task');
+    page('task', TaskController::class);
+    Route::put('task/{id}/duplicate', [TaskController::class, 'duplicate'])->name('task.duplicate');
+    Route::put('task/{id}/seq_decrease', [TaskController::class, 'seq_decrease'])->name('task.seq_decrease');
+    Route::put('task/{id}/seq_increase', [TaskController::class, 'seq_increase'])->name('task.seq_increase');
+
+    /*
+    Route::get   ('task/{project}',  TaskController::class           )->name('task');
+    Route::get   ('task/{id}',      [TaskController::class, 'show'   ])->name('task.show');
+    Route::post  ('task/{project}', [TaskController::class, 'store'  ])->name('task.store');
+    Route::put   ('task/{id}',      [TaskController::class, 'update' ])->name('task.update');
+    Route::delete('task/{id}',      [TaskController::class, 'destroy'])->name('task.destroy');
+    */
+
+
     page('order', OrderController::class);
     page('user', UserController::class);
     page('material', MaterialController::class);
-    page('estimate', EstimateController::class);
     page('customer', CustomerController::class);
     page('product', ProductController::class);
 
