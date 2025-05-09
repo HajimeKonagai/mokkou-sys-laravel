@@ -92,8 +92,16 @@ Route::group(['middleware' => ['auth', 'can:admin'], 'prefix' => 'admin', 'as' =
     Route::post('order_process/delivered/{order}', [OrderProcessController::class, 'delivered'])->name('order_process.delivered');
 
     // csv
-    Route::get('csv/customer/{uniqid?}', App\Http\Controllers\Admin\Csv\CustomerController::class)->name('csv.customer');
-    Route::post('csv/customer/{uniqid?}', [App\Http\Controllers\Admin\Csv\CustomerController::class, 'store'])->name('csv.customer.store');
+    Route::get ('csv/customer', App\Http\Controllers\Admin\Csv\CustomerController::class)->name('csv.customer');
+    Route::post('csv/customer', [App\Http\Controllers\Admin\Csv\CustomerController::class, 'store'])->name('csv.customer.store');
+    Route::get ('csv/user', App\Http\Controllers\Admin\Csv\UserController::class)->name('csv.user');
+    Route::post('csv/user', [App\Http\Controllers\Admin\Csv\UserController::class, 'store'])->name('csv.user.store');
+
+
+    // setting
+    Route::get   ('setting/{key}', [App\Http\Controllers\Admin\SettingController::class, 'get'    ])->name('setting.get');
+    Route::post  ('setting/{key}', [App\Http\Controllers\Admin\SettingController::class, 'update' ])->name('setting.update');
+    Route::delete('setting/{key}', [App\Http\Controllers\Admin\SettingController::class, 'destroy' ])->name('setting.destroy');
 });
 
 

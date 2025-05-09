@@ -13,7 +13,7 @@ export default {
 
 
     'csv':  {
-        'csv- 現場': route('admin.user')
+        'csv - 顧客': route('admin.csv.customer')
     },
 }
 
@@ -36,7 +36,7 @@ const project_menu = {
 
 const csv_menu = {
     'csv':  {
-        'csv- 現場': route('admin.user')
+        'csv - 顧客': route('admin.csv.customer')
     },
 }
 

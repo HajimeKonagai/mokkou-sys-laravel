@@ -13,6 +13,18 @@ use App\Models\Material;
 
 class UserController extends Crud
 {
+    private static $common_columns = [
+        'name',
+        'zip',
+        'address',
+        'tel',
+        'fax', 
+        'url',
+        'close_date',
+        'pay_date',
+        'pay_way',
+        'staff',
+    ];
     protected static function configs()
     {
         $configs = parent::configs();
@@ -83,14 +95,16 @@ class UserController extends Crud
             \DB::beginTransaction();
 
             // event(new Registered($user = $this->_create($request->all())));
-            $item = MainModel::create([
-                'name' => $request->input('name'),
-                'staff' => $request->input('staff'),
-                'address' => $request->input('address'),
+            $values = [
                 'email' => $request->input('email'),
                 'password' => Hash::make($request->input('password')),
                 'is_admin' => 0,
-            ]);
+            ];
+            foreach (static::$common_columns as $common_column)
+            {
+                $item->{$common_column} = $request->input($common_column);
+            }
+            $item = MainModel::create($values);
             $result = \Blu\Save::save(['pricing' => $request->input('pricing')], $item, static::config(), $useDefault = false);
 
             if (!$result) throw new \Exception();
@@ -127,24 +141,26 @@ class UserController extends Crud
             if ($request->password || $request->password_confirmation)
             {
                 $this->validator($request->all(), $id->id)->validate();
-                $id->fill([
-                    'name' => $request['name'],
-                    'staff' => $request['staff'],
-                    'address' => $request['address'],
+                $values = [
                     'email' => $request['email'],
                     'password' => Hash::make($request['password']),
-                ]);
+                ];
+                foreach (static::$common_columns as $common_column)
+                {
+                    $values[$common_column] = $request->input($common_column);
+                }
+                $id->fill($values);
                 $id->save();
             }
             else
             {
                 $this->validator_no_password($request->all(), $id->id)->validate();
-                $id->fill([
-                    'name' => $request['name'],
-                    'staff' => $request['staff'],
-                    'address' => $request['address'],
-                    'email' => $request['email'],
-                ]);
+                $values = [];
+                foreach (static::$common_columns as $common_column)
+                {
+                    $values[$common_column] = $request->input($common_column);
+                }
+                $id->fill($values);
                 $id->save();
             }
 

@@ -27,6 +27,18 @@ return [
                 ],
             ],
         ],
+        'zip' => [
+            'label' => '郵便番号',
+            'type' => 'text',
+            'size' => 12,
+            'search' => [
+                'zip' => [
+                    'label' => '郵便番号',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
         'address' => [
             'label' => '住所',
             'type' => 'textarea',
@@ -39,6 +51,80 @@ return [
                 ],
             ],
         ],
+        'tel' => [
+            'label' => 'TEL',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'tel' => [
+                    'label' => 'TEL',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+        'fax' => [
+            'label' => 'FAX',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'fax' => [
+                    'label' => 'FAX',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+        'url' => [
+            'label' => 'HP',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'url' => [
+                    'label' => 'HP',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+
+        'close_date' => [
+            'label' => '締め日',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'close_date' => [
+                    'label' => '締め日',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+        'pay_date' => [
+            'label' => '支払日',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'pay_date' => [
+                    'label' => '支払日',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+        'pay_way' => [
+            'label' => '回収方法',
+            'type' => 'text',
+            'size' => 50,
+            'search' => [
+                'pay_way' => [
+                    'label' => '回収方法',
+                    'type' => 'text',
+                    'compare' => 'like',
+                ],
+            ],
+        ],
+
 
         'created_at' => [
             'label' => '',
@@ -89,6 +175,13 @@ return [
     ],
     'form' => [
         'name',
+        'zip',
         'address',
+        'tel',
+        'fax', 
+        'url',
+        'close_date',
+        'pay_date',
+        'pay_way',
     ],
 ];
