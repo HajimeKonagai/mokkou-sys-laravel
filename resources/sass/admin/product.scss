@@ -16,7 +16,7 @@
                 @apply relative pr-2 text-sm;
                 li.Row
                 {
-                    @apply relative pl-28 pr-2 text-sm min-h-24;
+                    @apply relative pl-40 pr-2 text-sm min-h-24;
                     > .FieldGroup
                     {
                         > .Field
@@ -64,7 +64,7 @@
                         }
                         > .Field.seq
                         {
-                            @apply absolute left-0 top-0 my-auto h-1/2 bg-gray-100 w-24 p-1;
+                            @apply absolute left-0 top-0 my-auto h-1/2 bg-gray-100 w-36 p-1;
                             .FieldLabel
                             {
                                 @apply hidden;
@@ -80,7 +80,7 @@
 
                     > .control
                     {
-                        @apply absolute left-0 bottom-0 my-auto h-1/2 w-24 p-1;
+                        @apply absolute left-0 bottom-0 my-auto h-1/2 w-36 p-1;
                         .FieldLabel
                         {
                             @apply hidden;

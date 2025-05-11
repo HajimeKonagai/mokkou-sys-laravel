@@ -107,6 +107,12 @@ return [
             'size' => 50,
         ],
 
+        'net_rate' => [
+            'label' => 'ネット掛率',
+            'type' => 'number',
+            'default' => env('NET_RATE_DEFAULT', 0.65)
+        ],
+
     ],
     'index' => [
         '_control',
@@ -136,6 +142,7 @@ return [
             'location',
             'expiration',
         ],
+        'net_rate',
         'total_price',
     ],
 ];

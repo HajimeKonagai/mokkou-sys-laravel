@@ -23,6 +23,8 @@ return new class extends Migration
             $table->string('location')->nullable()->default(null);
             $table->string('expiration')->nullable()->default(null);
 
+            $table->float('net_rate')->nullable()->default(env('NET_RATE_DEFAULT', 0.65));
+
             $table->timestamps();
         });
     }

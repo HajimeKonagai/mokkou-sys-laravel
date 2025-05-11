@@ -14,7 +14,18 @@ return new class extends Migration
         Schema::create('products', function (Blueprint $table) {
             $table->id();
             $table->string('name')->nullable()->default(null);
+
+            $table->integer('material_cost')->nullable()->default(null);
+            $table->integer('process_cost')->nullable()->default(null);
+            $table->integer('aux_cost')->nullable()->default(null);
+            $table->integer('attach_cost')->nullable()->default(null);
+            $table->integer('cost_total')->nullable()->default(null);
+            $table->float('rate')->nullable()->default(env('RATE_DEFAULT', 0.6));
+            $table->float('raw_price')->nullable()->default(null);
+            $table->float('net_rate')->nullable()->default(env('NET_RATE_DEFAULT', 0.65));
             $table->integer('price')->nullable()->default(null);
+
+
             $table->integer('quantity')->nullable()->default(null);
             $table->string('unit')->nullable()->default(null);
             $table->integer('total')->nullable()->default(null);

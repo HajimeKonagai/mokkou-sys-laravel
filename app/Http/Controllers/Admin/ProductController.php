@@ -78,4 +78,20 @@ class ProductController extends Crud
     {
         return static::_destroy($request, $id);
     }
+
+    public function duplicate(Request $request, MainModel $id)
+    {
+        $newProduct = $id->replicate();
+        $newProduct->save();
+        foreach ($id->product_material as $product_material)
+        {
+            $newProductMaterial = $product_material->replicate();
+            $newProductMaterial->product_id = $newProduct->id;
+            $newProductMaterial->save();
+        }
+
+        return back()
+            ->with('success', '複製しました。');
+    }
+
 }

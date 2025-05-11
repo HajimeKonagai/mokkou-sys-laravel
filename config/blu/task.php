@@ -27,38 +27,49 @@ return [
         // 材料
         'material_cost' => [
             'label' => '材料-費用',
-            'type' => 'number',
-            'default' => 0,
+            'type' => 'text',
         ],
         // 加工
         'process_cost' => [
             'label' => '加工-費用',
             'type' => 'number',
-            'default' => 0,
+        ],
+        // 副資材
+        'aux_cost' => [
+            'label' => '副資材-費用',
+            'type' => 'text',
+            'description' => '([材料-費用] + [加工-費用]) × 5%'
         ],
         // 取付
         'attach_cost' => [
             'label' => '取付-費用',
             'type' => 'number',
-            'default' => 0,
         ],
         'cost_total' => [
             'label' => '費用-合計',
-            'type' => 'number',
-            'default' => 0,
+            'type' => 'text',
+            'description' => '[材料-費用] + [加工-費用] + [副資材-費用] + [取付-費用]'
         ],
         'rate' => [
             'label' => '掛率',
             'type' => 'number',
-            'default' => 1.0,
+            'default' => env('RATE_DEFAULT', 0.6),
         ],
         'raw_price' => [
             'label' => '売値',
-            'type' => 'number',
+            'type' => 'text',
+            'description' => '[費用-合計] ÷ [掛率]',
+        ],
+        'net_rate' => [
+            'label' => 'ネット掛率',
+            'type' => 'text',
+            'default' => env('NET_RATE_DEFAULT', 0.65),
+            'description' => "現場で設定されている値を参照します。"
         ],
         'price' => [
             'label' => 'ネット金額',
             'type' => 'number',
+            'description' => '[売値] ÷ [ネット掛率] に2桁切り上げ',
         ],
 
         // 数量
@@ -79,7 +90,6 @@ return [
             'type' => 'number',
             'size' => 10,
         ],
-
 
         'task_material' => [
             'label' => '材料',
@@ -150,10 +160,14 @@ return [
                 'preview' => ['name'],
                 'reference' => [
                     'name' => 'name',
-                    'price' => 'price',
-                    'unit' => 'unit',
+                    'material_cost' => 'material_cost',
+                    'process_cost' => 'process_cost',
+                    'aux_cost' => 'aux_cost',
+                    'attach_cost' => 'attach_cost',
+                    'cost_total' => 'cost_total',
+                    'rate' => 'rate',
+                    'raw_price' => 'raw_price',
                     'quantity' => 'quantity',
-                    'total' => 'total',
                     'product_material' => [
                         'field' => 'task_material',
                         'reference' => [
@@ -230,12 +244,14 @@ return [
         [
             'material_cost',
             'process_cost',
+            'aux_cost',
             'attach_cost',
             'cost_total',
         ],
         [
             'rate',
             'raw_price',
+            'net_rate',
             'price',
         ],
         ['quantity', 'unit'],

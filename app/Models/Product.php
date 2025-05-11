@@ -11,6 +11,8 @@ class Product extends Model
 
     public function product_material(): HasMany
     {
-        return $this->hasMany(ProductMaterial::class)->withOut('product');
+        return $this->hasMany(ProductMaterial::class)
+            ->orderBy('seq')
+            ->withOut('product');
     }
 }

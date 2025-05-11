@@ -25,13 +25,54 @@ return [
             ],
             'required' => true,
         ],
-        // 単価
-        'price' => [
-            'label' => '単価',
+
+       // 材料
+       'material_cost' => [
+            'label' => '材料-費用',
             'type' => 'text',
-            'after' => '×',
-            '_calcMaterials'=> true,
         ],
+        // 加工
+        'process_cost' => [
+            'label' => '加工-費用',
+            'type' => 'number',
+        ],
+        // 副資材
+        'aux_cost' => [
+            'label' => '副資材-費用',
+            'type' => 'text',
+            'description' => '([材料-費用] + [加工-費用]) × 5%'
+        ],
+        // 取付
+        'attach_cost' => [
+            'label' => '取付-費用',
+            'type' => 'number',
+        ],
+        'cost_total' => [
+            'label' => '費用-合計',
+            'type' => 'text',
+            'description' => '[材料-費用] + [加工-費用] + [副資材-費用] + [取付-費用]'
+        ],
+        'rate' => [
+            'label' => '掛率',
+            'type' => 'number',
+            'default' => env('RATE_DEFAULT', 0.6),
+        ],
+        'raw_price' => [
+            'label' => '売値',
+            'type' => 'text',
+            'description' => '[費用-合計] ÷ [掛率]',
+        ],
+        'net_rate' => [
+            'label' => 'ネット掛率',
+            'type' => 'text',
+            'default' => env('NET_RATE_DEFAULT', 0.65),
+            'description' => "品目登録時はデフォルト値(".env('NET_RATE_DEFAULT', 0.65).")で計算していますが、\n見積り時は現場で設定されている値を参照します。"
+        ],
+        'price' => [
+            'label' => 'ネット金額',
+            'type' => 'number',
+            'description' => '[売値] ÷ [ネット掛率] に2桁切り上げ',
+        ],        
         // 数量
         'quantity' => [
             'label' => '数量',
@@ -48,6 +89,7 @@ return [
             'label' => '合計',
             'type' => 'number',
             'size' => 10,
+            'description' => '[ネット金額] × [数量]'
         ],
 
         // 仕入先と金額設定
@@ -126,11 +168,22 @@ return [
         ],
     ],
     'form' => [
+
         'name',
-        ['price',
-        'quantity',
-        'unit',
-        'total'],
+        [
+            'material_cost',
+            'process_cost',
+            'aux_cost',
+            'attach_cost',
+            'cost_total',
+        ],
+        [
+            'rate',
+            'raw_price',
+            'net_rate',
+        ],
+        ['price', 'quantity', 'unit'],
+        'total',
         'product_material',
     ],
 ];
